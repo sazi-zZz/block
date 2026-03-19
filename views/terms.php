@@ -7,7 +7,7 @@ require_once '../includes/functions.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms and Conditions - BLOCK</title>
+    <title>Terms and Conditions - BLOCKNET</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -81,11 +81,11 @@ require_once '../includes/functions.php';
         </a>
         <h1>Terms and Conditions</h1>
 
-        <p>Welcome to BLOCK. By accessing or using our platform, you agree to comply with and be bound by the following
+        <p>Welcome to BLOCKNET. By accessing or using our platform, you agree to comply with and be bound by the following
             terms and conditions.</p>
 
         <h2>1. Acceptance of Terms</h2>
-        <p>By creating an account on BLOCK, you agree to these Terms and Conditions and our Privacy Policy. If you do
+        <p>By creating an account on BLOCKNET, you agree to these Terms and Conditions and our Privacy Policy. If you do
             not agree, please do not use our services.</p>
 
         <h2>2. User Conduct</h2>
@@ -93,7 +93,7 @@ require_once '../includes/functions.php';
             are strictly prohibited. We reserve the right to terminate accounts that violate these rules.</p>
 
         <h2>3. Account Security</h2>
-        <p>You are responsible for maintaining the confidentiality of your account credentials. BLOCK is not liable for
+        <p>You are responsible for maintaining the confidentiality of your account credentials. BLOCKNET is not liable for
             any loss resulting from unauthorized access to your account.</p>
 
         <h2>4. Community Standards</h2>
@@ -101,7 +101,7 @@ require_once '../includes/functions.php';
             that is deemed inappropriate may be removed without notice.</p>
 
         <h2>5. Limitation of Liability</h2>
-        <p>BLOCK provides the service "as is" without any warranties. We are not responsible for any damages resulting
+        <p>BLOCKNET provides the service "as is" without any warranties. We are not responsible for any damages resulting
             from the use or inability to use the platform.</p>
 
         <h2>6. Changes to Terms</h2>

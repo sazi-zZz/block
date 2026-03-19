@@ -46,22 +46,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $mail->Port = 587;
 
                     // Recipients
-                    $mail->setFrom('sazedurrahman707@gmail.com', 'BLOCK Platform');
+                    $mail->setFrom('sazedurrahman707@gmail.com', 'BLOCKNET Platform');
                     $mail->addAddress($email, $user['username']);
 
                     // Content
                     $mail->isHTML(true);
-                    $mail->Subject = 'Password Reset Request - BLOCK';
+                    $mail->Subject = 'Password Reset Request - BLOCKNET';
                     $mail->Body = "
                         <h2>Password Reset Request</h2>
                         <p>Hello {$user['username']},</p>
-                        <p>You recently requested to reset your password for your BLOCK account. Click the link below to reset it.</p>
+                        <p>You recently requested to reset your password for your BLOCKNET account. Click the link below to reset it.</p>
                         <p><a href='{$resetLink}'>{$resetLink}</a></p>
                         <p>If you did not request a password reset, please ignore this email.</p>
                         <p>This password reset is only valid for the next 60 minutes.</p>
-                        <p>Thanks,<br>The BLOCK Team</p>
+                        <p>Thanks,<br>The BLOCKNET Team</p>
                     ";
-                    $mail->AltBody = "Hello {$user['username']},\n\nYou recently requested to reset your password for your BLOCK account. Copy and paste the link below to reset it:\n{$resetLink}\n\nIf you did not request a password reset, please ignore this email.\nThis password reset is only valid for the next 60 minutes.\n\nThanks,\nThe BLOCK Team";
+                    $mail->AltBody = "Hello {$user['username']},\n\nYou recently requested to reset your password for your BLOCKNET account. Copy and paste the link below to reset it:\n{$resetLink}\n\nIf you did not request a password reset, please ignore this email.\nThis password reset is only valid for the next 60 minutes.\n\nThanks,\nThe BLOCKNET Team";
 
                     $mail->send();
                     $success = 'If an account with that email exists, we have sent a password reset link.';
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password - BLOCK</title>
+    <title>Forgot Password - BLOCKNET</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= BASE_URL?>/public/css/style.css">
@@ -107,11 +107,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Logo -->
             <div class="text-center mb-4">
                 <div class="auth-logo" style="margin-bottom: 1rem;">
-                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCK Logo"
+                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCKNET Logo"
                         style="width: 4.5rem; height: 4.5rem; object-fit: contain; display: block; margin: 0 auto;">
                     <div
                         style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.15em; margin-top: 0.5rem; text-transform: uppercase;">
-                        BLOCK</div>
+                        BLOCKNET</div>
                 </div>
                 <h1
                     style="font-family: 'Space Grotesk', sans-serif; font-size: 1.875rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.375rem;">

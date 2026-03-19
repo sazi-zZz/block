@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Basic init code for BLOCK app
-    console.log("BLOCK Platform initialised");
+    // Basic init code for BLOCKNET app
+    console.log("BLOCKNET Platform initialised");
 
     // Start notification polling if logged in
     startNotificationPolling();

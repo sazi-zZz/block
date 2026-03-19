@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#080808">
-    <title>BLOCK - Interest-Based Communities</title>
+    <title>BLOCKNET - Interest-Based Communities</title>
     <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
@@ -41,10 +41,10 @@
         <!-- Mobile Top Header -->
         <header class="mobile-header">
             <a href="<?= BASE_URL?>/index.php" class="logo-text">
-                <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCK" class="logo-icon"
+                <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCKNET" class="logo-icon"
                     style="width: 1.75rem; height: 1.75rem; object-fit: contain;">
                 <span
-                    style="font-family: 'Space Grotesk', sans-serif; font-weight: 800; letter-spacing: 0.08em;">BLOCK</span>
+                    style="font-family: 'Space Grotesk', sans-serif; font-weight: 800; letter-spacing: 0.08em;">BLOCKNET</span>
             </a>
             <div class="flex items-center gap-3">
                 <a href="<?= BASE_URL?>/views/notifications/index.php" class="nav-icon-link">
@@ -61,10 +61,10 @@
         <nav class="sidebar">
             <div class="sidebar-logo">
                 <a href="<?= BASE_URL?>/index.php" class="logo-text">
-                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCK" class="logo-icon"
+                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCKNET" class="logo-icon"
                         style="width: 1.75rem; height: 1.75rem; object-fit: contain;">
                     <span
-                        style="font-family: 'Space Grotesk', sans-serif; font-weight: 800; letter-spacing: 0.08em;">BLOCK</span>
+                        style="font-family: 'Space Grotesk', sans-serif; font-weight: 800; letter-spacing: 0.08em;">BLOCKNET</span>
                 </a>
             </div>
             <div class="nav-links">

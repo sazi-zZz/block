@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - BLOCK</title>
+    <title>Register - BLOCKNET</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -114,16 +114,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Logo -->
             <div class="text-center mb-4">
                 <div class="auth-logo" style="margin-bottom: 1rem;">
-                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCK Logo"
+                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCKNET Logo"
                         style="width: 4.5rem; height: 4.5rem; object-fit: contain; display: block; margin: 0 auto;">
                     <div
                         style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.15em; margin-top: 0.5rem; text-transform: uppercase;">
-                        BLOCK</div>
+                        BLOCKNET</div>
                 </div>
                 <h1
                     style="font-family: 'Space Grotesk', sans-serif; font-size: 1.875rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.375rem;">
                     Create account</h1>
-                <p class="text-muted" style="font-size: 0.9375rem;">Join the BLOCK community today</p>
+                <p class="text-muted" style="font-size: 0.9375rem;">Join the BLOCKNET community today</p>
             </div>
 
             <?php if ($error): ?>

@@ -18,12 +18,12 @@ function sendWelcomeEmail($toEmail, $username)
         $mail->Port = 587;
 
         // Recipients
-        $mail->setFrom('sazedurrahman707@gmail.com', 'BLOCK Platform');
+        $mail->setFrom('sazedurrahman707@gmail.com', 'BLOCKNET Platform');
         $mail->addAddress($toEmail, $username);
 
         // Content
         $mail->isHTML(true);
-        $mail->Subject = 'Welcome to BLOCK, ' . $username . '!';
+        $mail->Subject = 'Welcome to BLOCKNET, ' . $username . '!';
 
         $logoUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/block/public/Block.png';
         $discordLogoUrl = 'https://cdn-icons-png.flaticon.com/512/3670/3670157.png'; // Improved Discord Icon
@@ -33,12 +33,12 @@ function sendWelcomeEmail($toEmail, $username)
         $mail->Body = "
             <div style='background-color: #080808; color: #ffffff; padding: 40px; font-family: \"Inter\", sans-serif; max-width: 600px; margin: 0 auto; border-radius: 12px;'>
                 <div style='text-align: center; margin-bottom: 30px;'>
-                    <img src='{$logoUrl}' alt='BLOCK Logo' style='width: 80px; height: 80px; margin-bottom: 10px;'>
-                    <h1 style='color: #ffffff; font-size: 24px; font-weight: 800; letter-spacing: 2px;'>BLOCK</h1>
+                    <img src='{$logoUrl}' alt='BLOCKNET Logo' style='width: 80px; height: 80px; margin-bottom: 10px;'>
+                    <h1 style='color: #ffffff; font-size: 24px; font-weight: 800; letter-spacing: 2px;'>BLOCKNET</h1>
                 </div>
                 
                 <h2 style='color: #ffffff; margin-bottom: 20px;'>Welcome to the community, {$username}!</h2>
-                <p style='color: rgba(255,255,255,0.7); line-height: 1.6;'>We're thrilled to have you join BLOCK—where interests bring people together. Your account is now active and ready for you to explore.</p>
+                <p style='color: rgba(255,255,255,0.7); line-height: 1.6;'>We're thrilled to have you join BLOCKNET—where interests bring people together. Your account is now active and ready for you to explore.</p>
                 
                 <div style='margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;'>
                     <h3 style='margin-top: 0; color: #ffffff; font-size: 18px;'>Join our Discord Server</h3>
@@ -50,16 +50,16 @@ function sendWelcomeEmail($toEmail, $username)
                 </div>
 
                 <div style='margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 14px; text-align: center; color: rgba(255,255,255,0.5);'>
-                    <p>Have any questions? Contact us at <a href='mailto:support@block.com' style='color: #ffffff; text-decoration: none; font-weight: 600;'>support@block.com</a></p>
+                    <p>Have any questions? Contact us at <a href='mailto:support@blocknet.com' style='color: #ffffff; text-decoration: none; font-weight: 600;'>support@blocknet.com</a></p>
                     <p style='margin-top: 10px;'>
                         <a href='{$termsLink}' style='color: rgba(255,255,255,0.7); text-decoration: underline;'>Terms and Conditions</a>
                     </p>
-                    <p style='margin-top: 20px;'>&copy; " . date('Y') . " BLOCK Platform. All rights reserved.</p>
+                    <p style='margin-top: 20px;'>&copy; " . date('Y') . " BLOCKNET Platform. All rights reserved.</p>
                 </div>
             </div>
         ";
 
-        $mail->AltBody = "Welcome to BLOCK, {$username}!\n\nWe're thrilled to have you join our interest-based community.\n\nJoin our Discord Server: {$discordLink}\n\nHave questions? Contact us at support@block.com\nTerms and Conditions: {$termsLink}\n\nThanks,\nThe BLOCK Team";
+        $mail->AltBody = "Welcome to BLOCKNET, {$username}!\n\nWe're thrilled to have you join our interest-based community.\n\nJoin our Discord Server: {$discordLink}\n\nHave questions? Contact us at support@blocknet.com\nTerms and Conditions: {$termsLink}\n\nThanks,\nThe BLOCKNET Team";
 
         $mail->send();
         return true;

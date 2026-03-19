@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password - BLOCK</title>
+    <title>Reset Password - BLOCKNET</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= BASE_URL?>/public/css/style.css">
@@ -71,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
             <!-- Logo -->
             <div class="text-center mb-4">
                 <div class="auth-logo" style="margin-bottom: 1rem;">
-                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCK Logo"
+                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCKNET Logo"
                         style="width: 4.5rem; height: 4.5rem; object-fit: contain; display: block; margin: 0 auto;">
                     <div
                         style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.15em; margin-top: 0.5rem; text-transform: uppercase;">
-                        BLOCK</div>
+                        BLOCKNET</div>
                 </div>
                 <h1
                     style="font-family: 'Space Grotesk', sans-serif; font-size: 1.875rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.375rem;">
