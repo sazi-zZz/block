@@ -1,9 +1,9 @@
 <?php
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'block_app');
+define('DB_HOST', 'DB_HOST_PLACEHOLDER');
+define('DB_USER', 'DB_USER_PLACEHOLDER');
+define('DB_PASS', 'DB_PASS_PLACEHOLDER');
+define('DB_NAME', 'DB_NAME_PLACEHOLDER');
 
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
