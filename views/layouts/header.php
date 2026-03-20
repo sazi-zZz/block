@@ -5,7 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#080808">
+    
+    <!-- Primary Meta Tags -->
     <title>BLOCKNET - Interest-Based Communities</title>
+    <meta name="title" content="BLOCKNET - Interest-Based Communities">
+    <meta name="description" content="BLOCKNET is a community-interest-based discussion platform for intellectual people. Connect with like-minded individuals, share ideas, and engage in meaningful discussions.">
+    <meta name="keywords" content="blocknet, community, forum, discussion, intellectual, interest-based, social network, knowledge sharing">
+    <meta name="author" content="BLOCKNET">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?= BASE_URL?>/">
+    <meta property="og:title" content="BLOCKNET - Interest-Based Communities">
+    <meta property="og:description" content="BLOCKNET is a community-interest-based discussion platform for intellectual people. Connect with like-minded individuals, share ideas, and engage in meaningful discussions.">
+    <meta property="og:image" content="<?= BASE_URL?>/public/seoImage/blocknetSEO.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="<?= BASE_URL?>/">
+    <meta property="twitter:title" content="BLOCKNET - Interest-Based Communities">
+    <meta property="twitter:description" content="BLOCKNET is a community-interest-based discussion platform for intellectual people. Connect with like-minded individuals, share ideas, and engage in meaningful discussions.">
+    <meta property="twitter:image" content="<?= BASE_URL?>/public/seoImage/blocknetSEO.jpg">
+
     <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"

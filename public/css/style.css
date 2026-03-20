@@ -1881,6 +1881,24 @@ img {
     }
 }
 
+/* ── Discord Link Sidebar Styling ── */
+.nav-link.discord-link {
+    color: #5865F2 !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-link.discord-link:hover {
+    background: rgba(88, 101, 242, 0.1) !important;
+    color: #7289da !important;
+    transform: translateX(4px);
+}
+
+.nav-link.discord-link i {
+    color: #5865F2;
+    font-size: 1.1rem;
+}
+
 /* ── Small mobile (< 400px) ── */
 @media (max-width: 400px) {
     .card {
