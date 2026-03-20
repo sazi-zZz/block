@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
     <style>
         body {
             background: #080808;
-            overflow: hidden;
+            overflow-y: auto;
         }
     </style>
 </head>
