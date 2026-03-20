@@ -4,7 +4,7 @@ require_once '../../includes/functions.php';
 require_once '../../models/User.php';
 
 if (isLoggedIn()) {
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 }
 
 $error = '';
@@ -36,10 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_avatar'] = $user['avatar'];
-                redirect('index.php');
+                redirect(BASE_URL . 'index.php');
             }
             else {
-                redirect('views/auth/login.php');
+                redirect(BASE_URL . 'views/auth/login.php');
             }
         }
         else {
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="public/css/style.css">
-    <link rel="icon" type="image/png" href="public/Block.png">
+    <link rel="stylesheet" href="<?= BASE_URL?>public/css/style.css">
+    <link rel="icon" type="image/png" href="<?= BASE_URL?>public/Block.png">
     <style>
         body {
             background: #080808;

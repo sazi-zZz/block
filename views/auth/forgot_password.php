@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 if (isLoggedIn()) {
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 }
 
 $error = '';

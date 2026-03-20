@@ -9,14 +9,14 @@ requireLogin();
 
 $id = $_GET['id'] ?? null;
 if (!$id)
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 
 $blockModel = new Block($pdo);
 $postModel = new Post($pdo);
 
 $block = $blockModel->getById($id);
 if (!$block)
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 
 $isMember = $blockModel->isMember($id, $_SESSION['user_id']);
 $feed = $postModel->getFeed($_SESSION['user_id'], $id, 'newest', null, null, null, 20, 0);
@@ -43,11 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         elseif ($_POST['action'] === 'delete') {
             if ($isMember && $isMember['role'] === 'creator') {
                 $blockModel->delete($id);
-                redirect('index.php');
+                redirect(BASE_URL . 'index.php');
             }
         }
     }
-    redirect('views/blocks/view.php?id=' . $id);
+    redirect(BASE_URL . 'views/blocks/view.php?id=' . $id);
 }
 
 include '../layouts/header.php';

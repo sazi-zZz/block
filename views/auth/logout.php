@@ -1,7 +1,6 @@
 <?php
-session_start();
+require_once '../../includes/functions.php';
 session_unset();
 session_destroy();
-header("Location: /views/auth/login.php");
-exit();
+redirect(BASE_URL . 'views/auth/login.php');
 ?>

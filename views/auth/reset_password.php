@@ -4,7 +4,7 @@ require_once '../../includes/functions.php';
 require_once '../../models/User.php';
 
 if (isLoggedIn()) {
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 }
 
 $error = '';
@@ -13,7 +13,7 @@ $token = $_GET['token'] ?? '';
 $userModel = new User($pdo);
 
 if (empty($token)) {
-    redirect('views/auth/login.php');
+    redirect(BASE_URL . 'views/auth/login.php');
 }
 
 $user = $userModel->findByResetToken($token);

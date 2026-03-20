@@ -7,17 +7,17 @@ requireLogin();
 
 $id = $_GET['id'] ?? null;
 if (!$id)
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 
 $postModel = new Post($pdo);
 $post = $postModel->getById($id);
 
 if (!$post)
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 
 // Verify authorship
 if ($post['user_id'] != $_SESSION['user_id']) {
-    redirect('views/posts/view.php?id=' . $id);
+    redirect(BASE_URL . 'views/posts/view.php?id=' . $id);
 }
 
 $error = '';
@@ -62,7 +62,7 @@ include '../layouts/header.php';
 <div class="card max-w-lg mx-auto" style="max-width: 600px; margin: 0 auto;">
     <div class="flex justify-between items-center mb-3">
         <h2>Edit Post</h2>
-        <a href="views/posts/view.php?id=<?= $id?>" class="btn btn-secondary text-sm">Cancel</a>
+        <a href="<?= BASE_URL?>views/posts/view.php?id=<?= $id?>" class="btn btn-secondary text-sm">Cancel</a>
     </div>
 
     <?php if ($error): ?>
@@ -95,11 +95,11 @@ endif; ?>
         <div class="mb-2">
             <label>Current Media</label>
             <?php if (isVideo($post['image'])): ?>
-            <video src="public/images/post_images/<?= htmlspecialchars($post['image'])?>" controls
+            <video src="<?= BASE_URL?>public/images/post_images/<?= htmlspecialchars($post['image'])?>" controls
                 style="max-width: 100%; border-radius: 8px; display:block; margin-top:0.5rem;"></video>
             <?php
     else: ?>
-            <img src="public/images/post_images/<?= htmlspecialchars($post['image'])?>"
+            <img src="<?= BASE_URL?>public/images/post_images/<?= htmlspecialchars($post['image'])?>"
                 style="max-width: 100%; border-radius: 8px; display:block; margin-top:0.5rem;">
             <?php
     endif; ?>

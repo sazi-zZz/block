@@ -13,7 +13,7 @@ $userModel = new User($pdo);
 $profileUser = $userModel->getUserById($id);
 
 if (!$profileUser)
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 
 $followers = $userModel->countFollowers($id);
 $following = $userModel->countFollowing($id);
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userModel->unfollow($_SESSION['user_id'], $id);
         }
     }
-    redirect('views/user/profile.php?id=' . $id . '&tab=' . $tab);
+    redirect(BASE_URL . 'views/user/profile.php?id=' . $id . '&tab=' . $tab);
 }
 
 $isFollowing = !$isOwnProfile ? $userModel->isFollowing($_SESSION['user_id'], $id) : false;
@@ -232,14 +232,14 @@ include '../layouts/header.php';
 <!-- Profile Header -->
 <div class="card mb-3 p-0 overflow-hidden">
     <div style="position: relative;">
-        <img src="public/images/cover_photos/<?= htmlspecialchars($profileUser['cover_photo'] ?: 'default-cover.jpg')?>"
-            class="profile-cover" onerror="this.src='public/images/cover_photos/default-cover.jpg'; this.onerror=null;"
+        <img src="<?= BASE_URL?>public/images/cover_photos/<?= htmlspecialchars($profileUser['cover_photo'] ?: 'default-cover.jpg')?>"
+            class="profile-cover" onerror="this.src='<?= BASE_URL?>public/images/cover_photos/default-cover.jpg'; this.onerror=null;"
             alt="Cover Photo">
     </div>
 
     <div style="margin-top: -65px; padding: 0 1.25rem 1.5rem; position: relative; z-index: 2;">
-        <img src="public/images/avatars/<?= htmlspecialchars($profileUser['avatar'] ?: 'user.jpg')?>"
-            class="profile-avatar mx-auto" onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;"
+        <img src="<?= BASE_URL?>public/images/avatars/<?= htmlspecialchars($profileUser['avatar'] ?: 'user.jpg')?>"
+            class="profile-avatar mx-auto" onerror="this.src='<?= BASE_URL?>public/images/avatars/user.jpg'; this.onerror=null;"
             alt="<?= htmlspecialchars($profileUser['username'])?>">
 
         <div class="text-center">
@@ -271,10 +271,10 @@ include '../layouts/header.php';
     <!-- Action Buttons -->
     <div class="profile-actions">
         <?php if ($isOwnProfile): ?>
-        <a href="views/user/edit.php" class="btn btn-secondary">
+        <a href="<?= BASE_URL?>views/user/edit.php" class="btn btn-secondary">
             <i class="fa-solid fa-pen"></i> Edit Profile
         </a>
-        <a href="views/auth/logout.php" class="btn btn-danger mobile-only">
+        <a href="<?= BASE_URL?>views/auth/logout.php" class="btn btn-danger mobile-only">
             <i class="fa-solid fa-right-from-bracket"></i> Logout
         </a>
         <?php
@@ -290,7 +290,7 @@ else: ?>
             <?php
     endif; ?>
         </form>
-        <a href="views/chat/index.php?user_id=<?= $id?>" class="btn btn-secondary">
+        <a href="<?= BASE_URL?>views/chat/index.php?user_id=<?= $id?>" class="btn btn-secondary">
             <i class="fa-solid fa-message"></i> Message
         </a>
         <?php
@@ -334,8 +334,8 @@ elseif ($tab === 'followers'): ?>
     <h3 class="mb-3">Followers</h3>
     <?php foreach ($followersList as $user): ?>
     <a href="?id=<?= $user['id']?>" class="user-list-item">
-        <img src="public/images/avatars/<?= htmlspecialchars($user['avatar'] ?: 'user.jpg')?>"
-            class="avatar avatar-sm" onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
+    <img src="<?= BASE_URL?>public/images/avatars/<?= htmlspecialchars($user['avatar'] ?: 'user.jpg')?>"
+            class="avatar avatar-sm" onerror="this.src='<?= BASE_URL?>public/images/avatars/user.jpg'; this.onerror=null;">
         <div class="info">
             <h5>
                 <?= htmlspecialchars($user['username'])?>
@@ -357,8 +357,8 @@ elseif ($tab === 'following'): ?>
     <h3 class="mb-3">Following</h3>
     <?php foreach ($followingList as $user): ?>
     <a href="?id=<?= $user['id']?>" class="user-list-item">
-        <img src="public/images/avatars/<?= htmlspecialchars($user['avatar'] ?: 'user.jpg')?>"
-            class="avatar avatar-sm" onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
+    <img src="<?= BASE_URL?>public/images/avatars/<?= htmlspecialchars($user['avatar'] ?: 'user.jpg')?>"
+            class="avatar avatar-sm" onerror="this.src='<?= BASE_URL?>public/images/avatars/user.jpg'; this.onerror=null;">
         <div class="info">
             <h5>
                 <?= htmlspecialchars($user['username'])?>
@@ -380,9 +380,9 @@ elseif ($tab === 'blocks'): ?>
     <h3 class="mb-3">Blocks Joined</h3>
     <div class="blocks-grid">
         <?php foreach ($userBlocks as $block): ?>
-        <a href="views/blocks/view.php?id=<?= $block['id']?>" class="card bg-secondary"
+        <a href="<?= BASE_URL?>views/blocks/view.php?id=<?= $block['id']?>" class="card bg-secondary"
             style="margin-bottom: 0; text-align: center; text-decoration: none; color: inherit;">
-            <img src="public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
+            <img src="<?= BASE_URL?>public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
                 class="avatar avatar-lg mb-2 mx-auto" alt="Block Icon" style="display:block;">
             <h4>
                 <?= htmlspecialchars($block['name'])?>
@@ -403,9 +403,9 @@ elseif ($tab === 'created_blocks'): ?>
     </h3>
     <div class="blocks-grid">
         <?php foreach ($createdBlocks as $block): ?>
-        <a href="views/blocks/view.php?id=<?= $block['id']?>" class="card bg-secondary"
+        <a href="<?= BASE_URL?>views/blocks/view.php?id=<?= $block['id']?>" class="card bg-secondary"
             style="margin-bottom: 0; text-align: center; text-decoration: none; color: inherit;">
-            <img src="public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
+            <img src="<?= BASE_URL?>public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
                 class="avatar avatar-lg mb-2 mx-auto" alt="Block Icon" style="display:block;">
             <h4>
                 <?= htmlspecialchars($block['name'])?>

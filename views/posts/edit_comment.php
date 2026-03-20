@@ -7,17 +7,17 @@ requireLogin();
 
 $id = $_GET['id'] ?? null;
 if (!$id)
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 
 $postModel = new Post($pdo);
 $comment = $postModel->getCommentById($id);
 
 if (!$comment)
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 
 // Verify authorship
 if ($comment['user_id'] != $_SESSION['user_id']) {
-    redirect('views/posts/view.php?id=' . $comment['post_id']);
+    redirect(BASE_URL . 'views/posts/view.php?id=' . $comment['post_id']);
 }
 
 $error = '';
@@ -86,7 +86,7 @@ include '../layouts/header.php';
 <div class="card max-w-lg mx-auto" style="max-width: 600px; margin: 0 auto;">
     <div class="flex justify-between items-center mb-3">
         <h2>Edit Comment</h2>
-        <a href="views/posts/view.php?id=<?= $comment['post_id']?>" class="btn btn-secondary text-sm">Cancel</a>
+        <a href="<?= BASE_URL?>views/posts/view.php?id=<?= $comment['post_id']?>" class="btn btn-secondary text-sm">Cancel</a>
     </div>
 
     <?php if ($error): ?>
@@ -117,7 +117,7 @@ endif; ?>
                 2MB. Supported formats: JPEG, PNG, GIF, WebP.</small>
             <p class="text-xs text-muted mt-1">Leave empty to keep current media.</p>
             <div id="image-preview" class="mt-2" style="display: <?= $comment['media'] ? 'block' : 'none'?>;">
-                <img src="public/images/comment_media/<?= htmlspecialchars($comment['media'])?>"
+                <img src="<?= BASE_URL?>public/images/comment_media/<?= htmlspecialchars($comment['media'])?>"
                     style="max-height: 200px; border-radius: var(--radius); border: 1px solid var(--border-color);">
             </div>
         </div>

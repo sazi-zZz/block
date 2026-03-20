@@ -4,7 +4,7 @@ require_once '../../includes/functions.php';
 require_once '../../models/User.php';
 
 if (isLoggedIn()) {
-    redirect('index.php');
+    redirect(BASE_URL . 'index.php');
 }
 
 $error = '';
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_avatar'] = $user['avatar'];
-            redirect('index.php');
+            redirect(BASE_URL . 'index.php');
         }
         else {
             $error = 'Invalid credentials.';
