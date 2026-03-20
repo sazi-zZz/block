@@ -7,18 +7,18 @@ requireLogin();
 
 $id = $_GET['id'] ?? null;
 if (!$id)
-    redirect('/block/index.php');
+    redirect('index.php');
 
 $blockModel = new Block($pdo);
 $block = $blockModel->getById($id);
 
 if (!$block)
-    redirect('/block/index.php');
+    redirect('index.php');
 
 // Must be creator to edit
 $isMember = $blockModel->isMember($id, $_SESSION['user_id']);
 if (!$isMember || $isMember['role'] !== 'creator') {
-    redirect('/block/views/blocks/view.php?id=' . $id);
+    redirect('views/blocks/view.php?id=' . $id);
 }
 
 $error = '';
@@ -59,7 +59,7 @@ include '../layouts/header.php';
 <div class="card max-w-lg mx-auto" style="max-width: 600px; margin: 0 auto;">
     <div class="flex justify-between items-center mb-3">
         <h2>Edit Block</h2>
-        <a href="/block/views/blocks/view.php?id=<?= $id?>" class="btn btn-secondary text-sm">Cancel</a>
+        <a href="views/blocks/view.php?id=<?= $id?>" class="btn btn-secondary text-sm">Cancel</a>
     </div>
 
     <?php if ($error): ?>
@@ -77,7 +77,7 @@ endif; ?>
 
     <form method="POST" enctype="multipart/form-data">
         <div class="form-group text-center">
-            <img src="/block/public/images/block_icons/<?= htmlspecialchars($block['icon'])?>"
+            <img src="public/images/block_icons/<?= htmlspecialchars($block['icon'])?>"
                 class="avatar avatar-lg mx-auto mb-2" style="display: block; margin: 0 auto;">
         </div>
 

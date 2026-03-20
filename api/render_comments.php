@@ -29,9 +29,9 @@ foreach ($comments as $c) {
 foreach ($main_comments as $comment): ?>
 <div class="card mb-3 border-0 bg-secondary" style="border: 1px solid var(--border-color);">
     <div class="flex items-center mb-2">
-        <img src="/block/public/images/avatars/<?= htmlspecialchars($comment['avatar'] ?: 'user.jpg')?>"
+        <img src="public/images/avatars/<?= htmlspecialchars($comment['avatar'] ?: 'user.jpg')?>"
             class="avatar avatar-sm" style="margin-right: 0.5rem;"
-            onerror="this.src='/block/public/images/avatars/user.jpg'; this.onerror=null;">
+            onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
         <div style="flex:1;">
             <strong>
                 <?= htmlspecialchars($comment['username'])?>
@@ -60,7 +60,7 @@ foreach ($main_comments as $comment): ?>
 
         <?php if (!empty($comment['media'])): ?>
         <div class="mt-2">
-            <img src="/block/public/images/comment_media/<?= htmlspecialchars($comment['media'])?>"
+            <img src="public/images/comment_media/<?= htmlspecialchars($comment['media'])?>"
                 style="max-height: 200px; border-radius: 8px; border: 1px solid var(--border-color);">
         </div>
         <?php
@@ -71,7 +71,7 @@ foreach ($main_comments as $comment): ?>
         <button class="text-sm text-primary" style="background:none; border:none; cursor:pointer; padding:0;"
             onclick="toggleReplyForm(<?= $comment['id']?>, '<?= htmlspecialchars($comment['username'])?>')">Reply</button>
         <?php if ($comment['user_id'] == $_SESSION['user_id']): ?>
-        <a href="/block/views/posts/edit_comment.php?id=<?= $comment['id']?>" class="text-sm text-muted">Edit</a>
+        <a href="views/posts/edit_comment.php?id=<?= $comment['id']?>" class="text-sm text-muted">Edit</a>
         <?php
     endif; ?>
     </div>
@@ -102,9 +102,9 @@ foreach ($main_comments as $comment): ?>
         <?php foreach ($replies[$comment['id']] as $reply): ?>
         <div class="mb-3">
             <div class="flex items-center mb-1">
-                <img src="/block/public/images/avatars/<?= htmlspecialchars($reply['avatar'] ?: 'user.jpg')?>"
+                <img src="public/images/avatars/<?= htmlspecialchars($reply['avatar'] ?: 'user.jpg')?>"
                     class="avatar avatar-sm" style="margin-right: 0.5rem; width: 20px; height: 20px;"
-                    onerror="this.src='/block/public/images/avatars/user.jpg'; this.onerror=null;">
+                    onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
                 <div>
                     <span style="font-size: 0.9rem; font-weight: 600;">
                         <?= htmlspecialchars($reply['username'])?>
@@ -131,7 +131,7 @@ foreach ($main_comments as $comment): ?>
             endif; ?>
                 <?php if (!empty($reply['media'])): ?>
                 <div class="mt-2">
-                    <img src="/block/public/images/comment_media/<?= htmlspecialchars($reply['media'])?>"
+                    <img src="public/images/comment_media/<?= htmlspecialchars($reply['media'])?>"
                         style="max-height: 150px; border-radius: 8px; border: 1px solid var(--border-color);">
                 </div>
                 <?php
@@ -141,7 +141,7 @@ foreach ($main_comments as $comment): ?>
                 <button class="text-xs text-primary" style="background:none; border:none; cursor:pointer; padding:0;"
                     onclick="toggleReplyForm(<?= $comment['id']?>, '<?= htmlspecialchars($reply['username'])?>')">Reply</button>
                 <?php if ($reply['user_id'] == $_SESSION['user_id']): ?>
-                <a href="/block/views/posts/edit_comment.php?id=<?= $reply['id']?>" class="text-xs text-muted">Edit</a>
+                <a href="views/posts/edit_comment.php?id=<?= $reply['id']?>" class="text-xs text-muted">Edit</a>
                 <?php
             endif; ?>
             </div>

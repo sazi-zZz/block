@@ -31,7 +31,7 @@ include '../layouts/header.php';
         <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.25rem;">Communities</h1>
         <p class="text-muted" style="font-size: 0.9375rem;">Join blocks that match your interests</p>
     </div>
-    <a href="<?= BASE_URL?>/views/blocks/create.php" class="btn btn-primary"
+    <a href="<?= BASE_URL?>views/blocks/create.php" class="btn btn-primary"
         style="padding: 0.625rem 1.25rem; border-radius: 12px;">
         <i class="fa-solid fa-plus mr-2"></i> Create Block
     </a>
@@ -218,12 +218,12 @@ endif; ?>
 <!-- Block Grid -->
 <div class="blocks-grid-large">
     <?php foreach ($blocks as $block): ?>
-    <a href="<?= BASE_URL?>/views/blocks/view.php?id=<?= $block['id']?>" class="card block-card-detailed mb-0"
+    <a href="<?= BASE_URL?>views/blocks/view.php?id=<?= $block['id']?>" class="card block-card-detailed mb-0"
         style="text-align: center; text-decoration: none; color: inherit; padding: 2rem; display: flex; flex-direction: column; align-items: center;">
         <div class="avatar-glow mb-4">
-            <img src="<?= BASE_URL?>/public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
+            <img src="<?= BASE_URL?>public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
                 class="avatar avatar-lg" alt="Block Icon" style="border: 3px solid var(--primary); padding: 2px;"
-                onerror="this.src='<?= BASE_URL?>/public/images/block_icons/default_block.jpg'; this.onerror=null;">
+                onerror="this.src='<?= BASE_URL?>public/images/block_icons/default_block.jpg'; this.onerror=null;">
         </div>
         <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">
             <?= htmlspecialchars($block['name'])?>

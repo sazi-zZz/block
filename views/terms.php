@@ -12,8 +12,8 @@ require_once '../includes/functions.php';
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/block/public/css/style.css">
-    <link rel="icon" type="image/png" href="/block/public/Block.png">
+    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="icon" type="image/png" href="public/Block.png">
     <style>
         body {
             background: #080808;

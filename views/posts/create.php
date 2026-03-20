@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
         $postModel = new Post($pdo);
         if ($postModel->create($block_id, $_SESSION['user_id'], $title, $content, $image, $privacy, $repost_id)) {
-            redirect('/block/views/blocks/view.php?id=' . $block_id);
+            redirect('views/blocks/view.php?id=' . $block_id);
         }
         else {
             $error = "Failed to create post.";
@@ -72,7 +72,7 @@ endif; ?>
 
     <?php if (empty($userBlocks)): ?>
     <p class="text-muted">You must join a block before you can create a post!</p>
-    <a href="/block/views/blocks/index.php" class="btn btn-primary mt-2">Explore Blocks</a>
+    <a href="views/blocks/index.php" class="btn btn-primary mt-2">Explore Blocks</a>
     <?php
 else: ?>
     <form method="POST" enctype="multipart/form-data">

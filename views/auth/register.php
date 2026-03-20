@@ -4,7 +4,7 @@ require_once '../../includes/functions.php';
 require_once '../../models/User.php';
 
 if (isLoggedIn()) {
-    redirect('/block/index.php');
+    redirect('index.php');
 }
 
 $error = '';
@@ -36,10 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_avatar'] = $user['avatar'];
-                redirect('/block/index.php');
+                redirect('index.php');
             }
             else {
-                redirect('/block/views/auth/login.php');
+                redirect('views/auth/login.php');
             }
         }
         else {
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/block/public/css/style.css">
-    <link rel="icon" type="image/png" href="/block/public/Block.png">
+    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="icon" type="image/png" href="public/Block.png">
     <style>
         body {
             background: #080808;
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Logo -->
             <div class="text-center mb-4">
                 <div class="auth-logo" style="margin-bottom: 1rem;">
-                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCKNET Logo"
+                    <img src="<?= BASE_URL?>public/Block.png" alt="BLOCKNET Logo"
                         style="width: 4.5rem; height: 4.5rem; object-fit: contain; display: block; margin: 0 auto;">
                     <div
                         style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.15em; margin-top: 0.5rem; text-transform: uppercase;">
@@ -173,7 +173,7 @@ endif; ?>
                         style="display: flex; align-items: start; gap: 0.85rem; cursor: pointer; user-select: none;">
                         <input type="checkbox" name="terms_and_conditions" required>
                         <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7); line-height: 1.5; padding-top: 1px;">
-                            I agree to the <a href="<?= BASE_URL?>/views/terms.php" target="_blank"
+                            I agree to the <a href="<?= BASE_URL?>views/terms.php" target="_blank"
                                 style="color: var(--white); text-decoration: underline; font-weight: 600;">Terms &
                                 Conditions</a>
                         </span>

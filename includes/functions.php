@@ -3,7 +3,7 @@ session_start();
 date_default_timezone_set('Asia/Dhaka');
 
 if (!defined('BASE_URL')) {
-    define('BASE_URL', '/block');
+    define('BASE_URL', '/');
 }
 
 function redirect($url)
@@ -20,7 +20,7 @@ function isLoggedIn()
 function requireLogin()
 {
     if (!isLoggedIn()) {
-        redirect('/block/views/auth/login.php');
+        redirect('/views/auth/login.php');
     }
 }
 

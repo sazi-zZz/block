@@ -1,8 +1,8 @@
 </div> <!-- end content-wrapper -->
 </div> <!-- end app-layout -->
 
-<script src="/block/public/js/main.js"></script>
-<script src="/block/public/js/live_sync.js"></script>
+<script src="public/js/main.js"></script>
+<script src="public/js/live_sync.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.js-char-limit').forEach(input => {

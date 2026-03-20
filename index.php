@@ -57,7 +57,7 @@ endif; ?>
 endif; ?>
         </div>
         <div class="flex items-center gap-2">
-            <a href="<?= BASE_URL?>/views/posts/create.php" class="btn btn-primary btn-sm"
+            <a href="<?= BASE_URL?>views/posts/create.php" class="btn btn-primary btn-sm"
                 style="border-radius: 12px; font-size: 0.8125rem; padding: 0.5rem 0.875rem; white-space: nowrap;">
                 <i class="fa-solid fa-pen-nib mr-1"></i> Write Post
             </a>
@@ -154,7 +154,7 @@ endif; ?>
 
             <div class="feed-filter-footer">
                 <?php if ($filtersActive): ?>
-                <a href="<?= BASE_URL?>/" class="feed-filter-reset">
+                <a href="<?= BASE_URL?>" class="feed-filter-reset">
                     <i class="fa-solid fa-rotate-left"></i> Clear all filters
                 </a>
                 <?php
@@ -232,7 +232,7 @@ endif; ?>
     <div class="card text-center py-5">
         <i class="fa-solid fa-bolt mb-3" style="font-size: 3rem; color: var(--bg-tertiary);"></i>
         <p class="text-muted">No posts in your feed yet.</p>
-        <a href="<?= BASE_URL?>/views/blocks/index.php" class="btn btn-secondary mt-3">Explore Communities</a>
+        <a href="<?= BASE_URL?>views/blocks/index.php" class="btn btn-secondary mt-3">Explore Communities</a>
     </div>
     <?php
 endif; ?>
@@ -285,7 +285,7 @@ endif; ?>
             var dfi = document.getElementById("date_from");
             var dti = document.getElementById("date_to");
             if ((!si || si.value === "newest") && (!dfi || !dfi.value) && (!dti || !dti.value)) {
-                fetch("/block/api/feed_live.php?since_id=" + lastPostId, { credentials: "same-origin" })
+                fetch("api/feed_live.php?since_id=" + lastPostId, { credentials: "same-origin" })
                     .then(function (r) { return r.text(); })
                     .then(function (html) {
                         html = html.trim();
@@ -331,7 +331,7 @@ endif; ?>
                 self.disabled = true;
                 self.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Loading…';
 
-                fetch("/block/api/feed_load_more.php?" + params.toString(), { credentials: "same-origin" })
+                fetch("api/feed_load_more.php?" + params.toString(), { credentials: "same-origin" })
                     .then(function (r) { return r.text(); })
                     .then(function (html) {
                         html = html.trim();

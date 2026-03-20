@@ -80,9 +80,9 @@ endif; ?>
             <label>Cover Photo</label>
             <div style="height: 120px; border-radius: 8px; overflow: hidden; background: #1a1a1a; margin-bottom: 0.5rem;">
                 <img id="cover-preview"
-                    src="/block/public/images/cover_photos/<?= htmlspecialchars($profileUser['cover_photo'] ?: 'default-cover.jpg')?>"
+                    src="public/images/cover_photos/<?= htmlspecialchars($profileUser['cover_photo'] ?: 'default-cover.jpg')?>"
                     style="width: 100%; height: 100%; object-fit: cover;"
-                    onerror="this.src='/block/public/images/cover_photos/default-cover.jpg';">
+                    onerror="this.src='public/images/cover_photos/default-cover.jpg';">
             </div>
             <input type="file" name="cover_photo" accept="image/*"
                 onchange="previewImage(this, 'cover-preview')">
@@ -91,10 +91,10 @@ endif; ?>
         <div class="form-group text-center mb-4">
             <label style="display: block; text-align: left;">Profile Picture</label>
             <img id="avatar-preview"
-                src="/block/public/images/avatars/<?= htmlspecialchars($profileUser['avatar'] ?: 'user.jpg')?>"
+                src="public/images/avatars/<?= htmlspecialchars($profileUser['avatar'] ?: 'user.jpg')?>"
                 class="avatar avatar-lg mx-auto mb-2"
                 style="display: block; margin: 0 auto; object-fit: cover; border-radius: 50%; width: 100px; height: 100px; border: 3px solid var(--border-color);"
-                onerror="this.src='/block/public/images/avatars/user.jpg';">
+                onerror="this.src='public/images/avatars/user.jpg';">
             <input type="file" name="avatar" accept="image/*"
                 onchange="previewImage(this, 'avatar-preview')">
         </div>
@@ -115,7 +115,7 @@ endif; ?>
         </div>
 
         <button type="submit" id="update-btn" class="btn btn-primary btn-block mt-2">Update Profile</button>
-        <a href="/block/views/user/profile.php" class="btn btn-secondary btn-block mt-2"
+        <a href="views/user/profile.php" class="btn btn-secondary btn-block mt-2"
             style="text-align:center;">Cancel</a>
     </form>
 </div>

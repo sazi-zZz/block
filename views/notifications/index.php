@@ -23,13 +23,13 @@ include '../layouts/header.php';
         <?php
     $notifUrl = '#';
     if ($notif['type'] === 'like' || $notif['type'] === 'comment') {
-        $notifUrl = '/block/views/posts/view.php?id=' . $notif['source_id'];
+        $notifUrl = 'views/posts/view.php?id=' . $notif['source_id'];
     }
     elseif ($notif['type'] === 'follow') {
-        $notifUrl = '/block/views/user/profile.php?id=' . $notif['source_id'];
+        $notifUrl = 'views/user/profile.php?id=' . $notif['source_id'];
     }
     elseif ($notif['type'] === 'join') {
-        $notifUrl = '/block/views/blocks/view.php?id=' . $notif['source_id'];
+        $notifUrl = 'views/blocks/view.php?id=' . $notif['source_id'];
     }
 ?>
         <a href="<?= $notifUrl?>" class="notification-item flex gap-3 p-3 mb-2"

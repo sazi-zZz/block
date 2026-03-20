@@ -4,7 +4,7 @@ require_once '../../includes/functions.php';
 require_once '../../models/User.php';
 
 if (isLoggedIn()) {
-    redirect('/block/index.php');
+    redirect('index.php');
 }
 
 $error = '';
@@ -13,7 +13,7 @@ $token = $_GET['token'] ?? '';
 $userModel = new User($pdo);
 
 if (empty($token)) {
-    redirect('/block/views/auth/login.php');
+    redirect('views/auth/login.php');
 }
 
 $user = $userModel->findByResetToken($token);
@@ -54,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
     <title>Reset Password - BLOCKNET</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="<?= BASE_URL?>/public/css/style.css">
-    <link rel="icon" type="image/png" href="<?= BASE_URL?>/public/Block.png">
+    <link rel="stylesheet" href="<?= BASE_URL?>public/css/style.css">
+    <link rel="icon" type="image/png" href="<?= BASE_URL?>public/Block.png">
     <style>
         body {
             background: #080808;
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
             <!-- Logo -->
             <div class="text-center mb-4">
                 <div class="auth-logo" style="margin-bottom: 1rem;">
-                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCKNET Logo"
+                    <img src="<?= BASE_URL?>public/Block.png" alt="BLOCKNET Logo"
                         style="width: 4.5rem; height: 4.5rem; object-fit: contain; display: block; margin: 0 auto;">
                     <div
                         style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.15em; margin-top: 0.5rem; text-transform: uppercase;">

@@ -9,14 +9,14 @@ requireLogin();
 
 $id = $_GET['id'] ?? null;
 if (!$id)
-    redirect('/block/index.php');
+    redirect('index.php');
 
 $blockModel = new Block($pdo);
 $postModel = new Post($pdo);
 
 $block = $blockModel->getById($id);
 if (!$block)
-    redirect('/block/index.php');
+    redirect('index.php');
 
 $isMember = $blockModel->isMember($id, $_SESSION['user_id']);
 $feed = $postModel->getFeed($_SESSION['user_id'], $id, 'newest', null, null, null, 20, 0);
@@ -43,11 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         elseif ($_POST['action'] === 'delete') {
             if ($isMember && $isMember['role'] === 'creator') {
                 $blockModel->delete($id);
-                redirect('/block/index.php');
+                redirect('index.php');
             }
         }
     }
-    redirect('/block/views/blocks/view.php?id=' . $id);
+    redirect('views/blocks/view.php?id=' . $id);
 }
 
 include '../layouts/header.php';
@@ -60,10 +60,10 @@ include '../layouts/header.php';
     </div>
 
     <div class="avatar-glow mb-4 mx-auto" style="width: 100px; height: 100px;">
-        <img src="<?= BASE_URL?>/public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
+        <img src="<?= BASE_URL?>public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
             class="avatar avatar-lg"
             style="width: 100px; height: 100px; border: 4px solid var(--bg-secondary); box-shadow: 0 0 20px rgba(255,255,255,0.06);"
-            onerror="this.src='<?= BASE_URL?>/public/images/block_icons/default_block.jpg'; this.onerror=null;">
+            onerror="this.src='<?= BASE_URL?>public/images/block_icons/default_block.jpg'; this.onerror=null;">
     </div>
 
     <h1 style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 0.5rem;">
@@ -103,7 +103,7 @@ include '../layouts/header.php';
             <?php
     else: ?>
             <div class="flex gap-2">
-                <a href="<?= BASE_URL?>/views/blocks/edit.php?id=<?= $id?>" class="btn btn-secondary btn-sm"
+                <a href="<?= BASE_URL?>views/blocks/edit.php?id=<?= $id?>" class="btn btn-secondary btn-sm"
                     style="border-radius: 9999px;">
                     <i class="fa-solid fa-gear mr-1"></i> Edit
                 </a>
@@ -137,7 +137,7 @@ endif; ?>
             <i class="fa-solid fa-list-ul text-primary"></i>
             <h3 style="font-size: 1.25rem; font-weight: 700;">Block Feed</h3>
         </div>
-        <a href="<?= BASE_URL?>/views/posts/create.php?block_id=<?= $id?>" class="btn btn-primary"
+        <a href="<?= BASE_URL?>views/posts/create.php?block_id=<?= $id?>" class="btn btn-primary"
             style="padding: 0.625rem 1.25rem; border-radius: 12px; font-size: 0.9375rem;">
             <i class="fa-solid fa-pen-nib mr-2"></i> Write Post
         </a>
@@ -214,12 +214,12 @@ endif; ?>
         <div style="padding: 1rem 1.5rem; overflow-y: auto; flex: 1;">
             <div id="members-list" style="display: flex; flex-direction: column; gap: 0.5rem;">
                 <?php foreach ($members as $member): ?>
-                <a href="<?= BASE_URL?>/views/user/profile.php?id=<?= $member['id']?>" class="member-row"
+                <a href="<?= BASE_URL?>views/user/profile.php?id=<?= $member['id']?>" class="member-row"
                     data-username="<?= strtolower(htmlspecialchars($member['username']))?>"
                     style="display: flex; align-items: center; gap: 0.875rem; padding: 0.625rem 0.75rem; border-radius: var(--radius-sm); text-decoration: none; color: inherit; transition: background 0.18s;">
-                    <img src="<?= BASE_URL?>/public/images/avatars/<?= htmlspecialchars($member['avatar'] ?? 'user.jpg')?>"
+                    <img src="<?= BASE_URL?>public/images/avatars/<?= htmlspecialchars($member['avatar'] ?? 'user.jpg')?>"
                         class="avatar avatar-sm" style="border: 1px solid var(--border-color); flex-shrink: 0;"
-                        onerror="this.src='<?= BASE_URL?>/public/images/avatars/user.jpg'; this.onerror=null;">
+                        onerror="this.src='<?= BASE_URL?>public/images/avatars/user.jpg'; this.onerror=null;">
                     <span
                         style="font-weight: 600; font-size: 0.9375rem; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         <?= htmlspecialchars($member['username'])?>

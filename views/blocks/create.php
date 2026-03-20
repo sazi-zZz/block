@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($blockId) {
             // Auto member and creator roles handled manually for now
             $blockModel->addMember($blockId, $_SESSION['user_id'], 'creator');
-            redirect('/block/views/blocks/view.php?id=' . $blockId);
+            redirect('views/blocks/view.php?id=' . $blockId);
         }
         else {
             $error = "Failed to create block. Name might be taken.";

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ids = Array.from(postEls).map(el => el.getAttribute('data-post-id'));
         const uniqueIds = [...new Set(ids)];
 
-        fetch('/block/api/sync_live.php?post_ids=' + uniqueIds.join(','))
+        fetch('api/sync_live.php?post_ids=' + uniqueIds.join(','))
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.posts) {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     if (el.classList.contains('main-post-view') && oldCount !== parseInt(postData.comment_count)) {
                                         // Count changed, fetch fresh comments HTML
-                                        fetch(`/block/api/render_comments.php?post_id=${id}`)
+                                        fetch(`/api/render_comments.php?post_id=${id}`)
                                             .then(r => r.text())
                                             .then(html => {
                                                 const clist = document.querySelector('.comments-list');

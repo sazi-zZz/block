@@ -9,18 +9,18 @@ requireLogin();
 
 $id = $_GET['id'] ?? null;
 if (!$id)
-    redirect('/block/index.php');
+    redirect('index.php');
 
 $postModel = new Post($pdo);
 $post = $postModel->getById($id);
 
 if (!$post)
-    redirect('/block/index.php');
+    redirect('index.php');
 
 if ($post['privacy'] === 'block_only' && $post['user_id'] != $_SESSION['user_id']) {
     $blockModel = new Block($pdo);
     if (!$blockModel->isMember($post['block_id'], $_SESSION['user_id'])) {
-        redirect('/block/index.php');
+        redirect('index.php');
     }
 }
 
@@ -94,12 +94,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($post['user_id'] == $_SESSION['user_id']) {
                 $block_id = $post['block_id'];
                 $postModel->delete($id);
-                redirect('/block/views/blocks/view.php?id=' . $block_id);
+                redirect('views/blocks/view.php?id=' . $block_id);
             }
         }
     }
     // Refresh page
-    redirect('/block/views/posts/view.php?id=' . $id);
+    redirect('views/posts/view.php?id=' . $id);
 }
 
 $comments = $postModel->getComments($id);
@@ -121,17 +121,17 @@ include '../layouts/header.php';
 
 <div class="card mb-3 main-post-view" data-post-id="<?= $post['id']?>">
     <div class="flex items-center mb-3">
-        <a href="/block/views/user/profile.php?id=<?= $post['user_id']?>">
-            <img src="/block/public/images/avatars/<?= htmlspecialchars($post['avatar'] ?: 'user.jpg')?>"
+        <a href="views/user/profile.php?id=<?= $post['user_id']?>">
+            <img src="public/images/avatars/<?= htmlspecialchars($post['avatar'] ?: 'user.jpg')?>"
                 class="avatar avatar-sm" style="margin-right: 0.75rem;"
-                onerror="this.src='/block/public/images/avatars/user.jpg'; this.onerror=null;">
+                onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
         </a>
         <div>
             <strong>
                 <?= htmlspecialchars($post['username'])?>
             </strong>
             <div style="font-size: 0.75rem;" class="text-muted">
-                in <a href="/block/views/blocks/view.php?id=<?= $post['block_id']?>">
+                in <a href="views/blocks/view.php?id=<?= $post['block_id']?>">
                     <?= htmlspecialchars($post['block_name'])?>
                 </a> •
                 <?= getDisplayTime($post['created_at'])?>
@@ -139,7 +139,7 @@ include '../layouts/header.php';
         </div>
         <?php if ($post['user_id'] == $_SESSION['user_id']): ?>
         <div style="margin-left: auto;" class="flex gap-2">
-            <a href="/block/views/posts/edit.php?id=<?= $id?>" class="btn btn-secondary text-sm"
+            <a href="views/posts/edit.php?id=<?= $id?>" class="btn btn-secondary text-sm"
                 style="padding: 0.25rem 0.75rem;">Edit</a>
             <form method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');"
                 style="display:inline;">
@@ -180,11 +180,11 @@ endif; ?>
 
     <?php if ($post['image']): ?>
     <?php if (isVideo($post['image'])): ?>
-    <video src="/block/public/images/post_images/<?= htmlspecialchars($post['image'])?>" controls
+    <video src="public/images/post_images/<?= htmlspecialchars($post['image'])?>" controls
         style="max-width: 100%; border-radius: 8px; margin-bottom: 1.5rem;"></video>
     <?php
     else: ?>
-    <img src="/block/public/images/post_images/<?= htmlspecialchars($post['image'])?>"
+    <img src="public/images/post_images/<?= htmlspecialchars($post['image'])?>"
         style="max-width: 100%; border-radius: 8px; margin-bottom: 1.5rem;">
     <?php
     endif; ?>
@@ -194,12 +194,12 @@ endif; ?>
     <!-- Repost Card -->
     <div class="card p-3 mb-3 bg-darker"
         style="border: 1px solid var(--border-color); border-radius: var(--radius); pointer-events: auto;">
-        <a href="<?= BASE_URL?>/views/posts/view.php?id=<?= $post['rp_id']?>"
+        <a href="<?= BASE_URL?>views/posts/view.php?id=<?= $post['rp_id']?>"
             style="text-decoration:none; color:inherit; display:block;">
             <div class="flex items-center mb-2">
-                <img src="<?= BASE_URL?>/public/images/avatars/<?= htmlspecialchars($post['repost_avatar'] ?? 'user.jpg')?>"
+                <img src="<?= BASE_URL?>public/images/avatars/<?= htmlspecialchars($post['repost_avatar'] ?? 'user.jpg')?>"
                     class="avatar avatar-sm" style="margin-right: 0.5rem; width: 24px; height: 24px;" alt=""
-                    onerror="this.src='<?= BASE_URL?>/public/images/avatars/user.jpg'; this.onerror=null;">
+                    onerror="this.src='<?= BASE_URL?>public/images/avatars/user.jpg'; this.onerror=null;">
                 <span style="font-size: 0.85rem; font-weight: 500;">
                     <?= htmlspecialchars($post['repost_username'] ?? 'Unknown User')?>
                 </span>
@@ -237,7 +237,7 @@ endif; ?>
                 <?= count($comments)?>
             </span>
         </a>
-        <a href="<?= BASE_URL?>/views/posts/create.php?repost_id=<?= $post['id']?>" title="Repost"
+        <a href="<?= BASE_URL?>views/posts/create.php?repost_id=<?= $post['id']?>" title="Repost"
             style="color: var(--text-muted); font-size:1rem; display: flex; align-items:center; gap: 0.5rem; text-decoration:none; margin-left: auto;">
             <i class="fa-solid fa-retweet"></i> Repost
         </a>
@@ -271,11 +271,11 @@ endif; ?>
         <?php foreach ($main_comments as $comment): ?>
         <div class="comment mb-3" style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
             <div class="flex items-center mb-1">
-                <a href="/block/views/user/profile.php?id=<?= $comment['user_id']?>"
+                <a href="views/user/profile.php?id=<?= $comment['user_id']?>"
                     style="text-decoration:none; color:inherit; display:flex; align-items:center;">
-                    <img src="/block/public/images/avatars/<?= htmlspecialchars($comment['avatar'] ?: 'user.jpg')?>"
+                    <img src="public/images/avatars/<?= htmlspecialchars($comment['avatar'] ?: 'user.jpg')?>"
                         class="avatar" style="width:28px; height:28px; margin-right: 0.5rem;"
-                        onerror="this.src='/block/public/images/avatars/user.jpg'; this.onerror=null;">
+                        onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
                     <strong>
                         <?= htmlspecialchars($comment['username'])?>
                     </strong>
@@ -304,7 +304,7 @@ endif; ?>
     endif; ?>
                 <?php if (!empty($comment['media'])): ?>
                 <div class="pl-2 mt-2">
-                    <img src="/block/public/images/comment_media/<?= htmlspecialchars($comment['media'])?>"
+                    <img src="public/images/comment_media/<?= htmlspecialchars($comment['media'])?>"
                         style="max-height: 200px; border-radius: 8px; border: 1px solid var(--border-color);">
                 </div>
                 <?php
@@ -314,7 +314,7 @@ endif; ?>
                 <button class="text-sm text-primary" style="background:none; border:none; cursor:pointer; padding:0;"
                     onclick="toggleReplyForm(<?= $comment['id']?>)">Reply</button>
                 <?php if ($comment['user_id'] == $_SESSION['user_id']): ?>
-                <a href="/block/views/posts/edit_comment.php?id=<?= $comment['id']?>"
+                <a href="views/posts/edit_comment.php?id=<?= $comment['id']?>"
                     class="text-sm text-muted">Edit</a>
                 <?php
     endif; ?>
@@ -354,11 +354,11 @@ endif; ?>
                 <?php foreach ($replies[$comment['id']] as $reply): ?>
                 <div class="reply mb-2">
                     <div class="flex items-center mb-1">
-                        <a href="/block/views/user/profile.php?id=<?= $reply['user_id']?>"
+                        <a href="views/user/profile.php?id=<?= $reply['user_id']?>"
                             style="text-decoration:none; color:inherit; display:flex; align-items:center;">
-                            <img src="/block/public/images/avatars/<?= htmlspecialchars($reply['avatar'] ?: 'user.jpg')?>"
+                            <img src="public/images/avatars/<?= htmlspecialchars($reply['avatar'] ?: 'user.jpg')?>"
                                 class="avatar" style="width:20px; height:20px; margin-right: 0.5rem;"
-                                onerror="this.src='/block/public/images/avatars/user.jpg'; this.onerror=null;">
+                                onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
                             <strong style="font-size: 0.85rem;">
                                 <?= htmlspecialchars($reply['username'])?>
                             </strong>
@@ -385,7 +385,7 @@ endif; ?>
             endif; ?>
                         <?php if (!empty($reply['media'])): ?>
                         <div class="mt-2">
-                            <img src="/block/public/images/comment_media/<?= htmlspecialchars($reply['media'])?>"
+                            <img src="public/images/comment_media/<?= htmlspecialchars($reply['media'])?>"
                                 style="max-height: 150px; border-radius: 8px; border: 1px solid var(--border-color);">
                         </div>
                         <?php
@@ -396,7 +396,7 @@ endif; ?>
                             style="background:none; border:none; cursor:pointer; padding:0;"
                             onclick="toggleReplyForm(<?= $comment['id']?>, '<?= htmlspecialchars($reply['username'])?>')">Reply</button>
                         <?php if ($reply['user_id'] == $_SESSION['user_id']): ?>
-                        <a href="/block/views/posts/edit_comment.php?id=<?= $reply['id']?>"
+                        <a href="views/posts/edit_comment.php?id=<?= $reply['id']?>"
                             class="text-xs text-muted">Edit</a>
                         <?php
             endif; ?>

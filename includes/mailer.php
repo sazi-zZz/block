@@ -25,9 +25,9 @@ function sendWelcomeEmail($toEmail, $username)
         $mail->isHTML(true);
         $mail->Subject = 'Welcome to BLOCKNET, ' . $username . '!';
 
-        $logoUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/block/public/Block.png';
+        $logoUrl = 'http://' . $_SERVER['HTTP_HOST'] . 'public/Block.png';
         $discordLogoUrl = 'https://cdn-icons-png.flaticon.com/512/3670/3670157.png'; // Improved Discord Icon
-        $termsLink = 'http://' . $_SERVER['HTTP_HOST'] . '/block/views/terms.php';
+        $termsLink = 'http://' . $_SERVER['HTTP_HOST'] . 'views/terms.php';
         $discordLink = 'https://discord.gg/Cphf8Uchnp'; // Placeholder discord link
 
         $mail->Body = "

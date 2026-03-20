@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 if (isLoggedIn()) {
-    redirect('/block/index.php');
+    redirect('index.php');
 }
 
 $error = '';
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
             if ($userModel->setResetToken($user['id'], $token, $expires)) {
-                $resetLink = 'http://' . $_SERVER['HTTP_HOST'] . BASE_URL . '/views/auth/reset_password.php?token=' . $token;
+                $resetLink = 'http://' . $_SERVER['HTTP_HOST'] . BASE_URL . 'views/auth/reset_password.php?token=' . $token;
 
                 $mail = new PHPMailer(true);
                 try {
@@ -90,8 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Forgot Password - BLOCKNET</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="<?= BASE_URL?>/public/css/style.css">
-    <link rel="icon" type="image/png" href="<?= BASE_URL?>/public/Block.png">
+    <link rel="stylesheet" href="<?= BASE_URL?>public/css/style.css">
+    <link rel="icon" type="image/png" href="<?= BASE_URL?>public/Block.png">
     <style>
         body {
             background: #080808;
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Logo -->
             <div class="text-center mb-4">
                 <div class="auth-logo" style="margin-bottom: 1rem;">
-                    <img src="<?= BASE_URL?>/public/Block.png" alt="BLOCKNET Logo"
+                    <img src="<?= BASE_URL?>public/Block.png" alt="BLOCKNET Logo"
                         style="width: 4.5rem; height: 4.5rem; object-fit: contain; display: block; margin: 0 auto;">
                     <div
                         style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.15em; margin-top: 0.5rem; text-transform: uppercase;">

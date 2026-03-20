@@ -29,7 +29,7 @@ include '../layouts/header.php';
 <!-- Page Header -->
 <div class="flex items-center justify-between mb-4" style="gap: 1rem; flex-wrap: wrap;">
     <div>
-        <a href="<?= BASE_URL?>/index.php"
+        <a href="<?= BASE_URL?>index.php"
             style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--gray-500); margin-bottom: 0.5rem; text-decoration: none;"
             onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--gray-500)'">
             <i class="fa-solid fa-arrow-left" style="font-size: 0.7rem;"></i> Back to Home
@@ -46,7 +46,7 @@ include '../layouts/header.php';
 endif; ?>
         </p>
     </div>
-    <a href="<?= BASE_URL?>/views/blocks/create.php" class="btn btn-primary"
+    <a href="<?= BASE_URL?>views/blocks/create.php" class="btn btn-primary"
         style="border-radius: 999px; white-space: nowrap;">
         <i class="fa-solid fa-plus"></i> New Block
     </a>
@@ -198,7 +198,7 @@ endif; ?>
         style="margin-bottom: 0; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative;">
 
         <!-- Edit shortcut -->
-        <a href="<?= BASE_URL?>/views/blocks/edit.php?id=<?= $block['id']?>"
+        <a href="<?= BASE_URL?>views/blocks/edit.php?id=<?= $block['id']?>"
             style="position: absolute; top: 0.75rem; right: 0.75rem; color: var(--gray-600); font-size: 0.85rem; padding: 0.25rem 0.5rem; border-radius: 6px; transition: all 0.2s;"
             title="Edit block"
             onmouseover="this.style.background='rgba(255,255,255,0.07)'; this.style.color='var(--white)'"
@@ -206,12 +206,12 @@ endif; ?>
             <i class="fa-solid fa-gear"></i>
         </a>
 
-        <a href="<?= BASE_URL?>/views/blocks/view.php?id=<?= $block['id']?>"
+        <a href="<?= BASE_URL?>views/blocks/view.php?id=<?= $block['id']?>"
             style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; width: 100%;">
             <div class="avatar-glow mb-3">
-                <img src="<?= BASE_URL?>/public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
+                <img src="<?= BASE_URL?>public/images/block_icons/<?= htmlspecialchars($block['icon'] ?: 'default_block.jpg')?>"
                     class="avatar avatar-lg" style="border: 2px solid var(--border-color);"
-                    onerror="this.src='<?= BASE_URL?>/public/images/block_icons/default_block.jpg'; this.onerror=null;">
+                    onerror="this.src='<?= BASE_URL?>public/images/block_icons/default_block.jpg'; this.onerror=null;">
             </div>
             <h4 style="font-weight: 700; font-size: 0.9375rem; margin-bottom: 0.375rem; word-break: break-word;">
                 <?= htmlspecialchars($block['name'])?>
@@ -268,7 +268,7 @@ else: ?>
         style="font-size: 2.5rem; color: var(--gray-700); margin-bottom: 1rem; display: block;"></i>
     <h3 style="font-weight: 700; margin-bottom: 0.5rem;">No blocks yet</h3>
     <p class="text-muted" style="margin-bottom: 1.5rem;">You haven't created any blocks. Start your first community!</p>
-    <a href="<?= BASE_URL?>/views/blocks/create.php" class="btn btn-primary" style="border-radius: 999px;">
+    <a href="<?= BASE_URL?>views/blocks/create.php" class="btn btn-primary" style="border-radius: 999px;">
         <i class="fa-solid fa-plus"></i> Create your first block
     </a>
     <?php

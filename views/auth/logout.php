@@ -2,6 +2,6 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: /block/views/auth/login.php");
+header("Location: /views/auth/login.php");
 exit();
 ?>
