@@ -26,24 +26,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     else {
         $userModel = new User($pdo);
-        if ($userModel->register($username, $email, $password)) {
-            // Send welcome email
-            require_once '../../includes/mailer.php';
-            sendWelcomeEmail($email, $username);
+        try {
+            if ($userModel->register($username, $email, $password)) {
+                // Send welcome email
+                require_once '../../includes/mailer.php';
+                sendWelcomeEmail($email, $username);
 
-            $user = $userModel->login($username, $password);
-            if ($user) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['user_avatar'] = $user['avatar'];
-                redirect(BASE_URL . 'index.php');
+                $user = $userModel->login($username, $password);
+                if ($user) {
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['user_avatar'] = $user['avatar'];
+                    redirect(BASE_URL . 'index.php');
+                }
+                else {
+                    redirect(BASE_URL . 'views/auth/login.php');
+                }
             }
             else {
-                redirect(BASE_URL . 'views/auth/login.php');
+                $error = 'Registration failed. Username or email may already be taken.';
             }
         }
-        else {
-            $error = 'Registration failed. Username or email may already be taken.';
+        catch (PDOException $e) {
+            $error = 'Database error: ' . htmlspecialchars($e->getMessage());
         }
     }
 }
@@ -191,7 +196,7 @@ endif; ?>
                 style="margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
                 <p class="text-muted" style="font-size: 0.9rem;">
                     Already have an account?
-                    <a href="login.php" style="color: var(--white); font-weight: 600; margin-left: 0.25rem;">Sign in
+                    <a href="<?= BASE_URL?>views/auth/login.php" style="color: var(--white); font-weight: 600; margin-left: 0.25rem;">Sign in
                         →</a>
                 </p>
             </div>

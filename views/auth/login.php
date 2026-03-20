@@ -89,7 +89,7 @@ endif; ?>
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <label style="margin-bottom: 0;">Password</label>
-                        <a href="forgot_password.php"
+                        <a href="<?= BASE_URL?>views/auth/forgot_password.php"
                             style="color: var(--primary); font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: all 0.2s ease;">Forgot
                             password?</a>
                     </div>
@@ -110,7 +110,7 @@ endif; ?>
                 style="margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
                 <p class="text-muted" style="font-size: 0.9rem;">
                     Don't have an account?
-                    <a href="register.php" style="color: var(--white); font-weight: 600; margin-left: 0.25rem;">Create
+                    <a href="<?= BASE_URL?>views/auth/register.php" style="color: var(--white); font-weight: 600; margin-left: 0.25rem;">Create
                         one →</a>
                 </p>
             </div>

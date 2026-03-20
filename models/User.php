@@ -17,7 +17,12 @@ class User
             return $stmt->execute([$username, $email, $hash]);
         }
         catch (PDOException $e) {
-            return false;
+            // 23000 = integrity constraint violation (duplicate username/email)
+            if ($e->getCode() == 23000) {
+                return false;
+            }
+            // Re-throw all other errors (missing table, bad connection, etc.)
+            throw $e;
         }
     }
 

@@ -99,7 +99,7 @@ endif; ?>
                 <?= htmlspecialchars($success)?>
             </div>
             <div class="text-center">
-                <a href="login.php" class="btn btn-primary"
+                <a href="<?= BASE_URL?>views/auth/login.php" class="btn btn-primary"
                     style="padding: 0.875rem 2rem; font-size: 1rem; font-weight: 700;">
                     Go to Login
                 </a>
@@ -136,7 +136,7 @@ else: ?>
                 style="margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
                 <p class="text-muted" style="font-size: 0.9rem;">
                     Back to
-                    <a href="login.php" style="color: var(--white); font-weight: 600; margin-left: 0.25rem;">Sign In
+                    <a href="<?= BASE_URL?>views/auth/login.php" style="color: var(--white); font-weight: 600; margin-left: 0.25rem;">Sign In
                         →</a>
                 </p>
             </div>
