@@ -2,8 +2,14 @@
 session_start();
 date_default_timezone_set('Asia/Dhaka');
 
+function isLocalEnvironment()
+{
+    $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
+    return in_array(strtolower(explode(':', $host)[0]), ['localhost', '127.0.0.1', '::1']);
+}
+
 if (!defined('BASE_URL')) {
-    define('BASE_URL', '/');
+    define('BASE_URL', isLocalEnvironment() ? '/blocknet/' : '/');
 }
 
 function redirect($url)
@@ -20,7 +26,7 @@ function isLoggedIn()
 function requireLogin()
 {
     if (!isLoggedIn()) {
-        redirect('/views/auth/login.php');
+        redirect(BASE_URL . 'views/auth/login.php');
     }
 }
 
