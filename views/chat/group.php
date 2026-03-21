@@ -163,7 +163,7 @@ include '../layouts/header.php';
     </div>
 </div>
 
-<div class="gchat-layout">
+<div id="gchat-layout" class="gchat-layout <?= $group ? 'show-chat' : '' ?>">
     <!-- Left: group list -->
     <div class="card gchat-sidebar p-0">
         <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color);">
@@ -229,6 +229,9 @@ endif; ?>
 else: ?>
         <!-- Header -->
         <div class="gchat-header">
+            <button class="mobile-back-btn" onclick="document.getElementById('gchat-layout').classList.remove('show-chat')">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
             <div class="gchat-group-photo">
                 <?php if ($group['photo']): ?>
                 <img src="public/images/group_photos/<?= htmlspecialchars($group['photo'])?>" alt="group photo"

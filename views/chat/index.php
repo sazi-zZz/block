@@ -7,10 +7,13 @@ require_once '../../models/Message.php';
 requireLogin();
 
 $user_id = $_GET['user_id'] ?? null;
+$is_global = isset($_GET['global']); // if user explicitly opens Global Chat
 $messageModel = new Message($pdo);
 $recentConversations = $messageModel->getRecentConversations($_SESSION['user_id']);
 
 $activeChatName = 'Global Chat';
+$isChatActive = $user_id || $is_global; // used to slide to chat window on mobile
+
 if ($user_id) {
     $userModel = new User($pdo);
     $otherUser = $userModel->getUserById($user_id);
@@ -19,6 +22,7 @@ if ($user_id) {
     }
     else {
         $user_id = null; // invalid user
+        $isChatActive = false;
     }
 }
 
@@ -70,7 +74,7 @@ include '../layouts/header.php';
 <!-- Custom chat CSS -->
 <link rel="stylesheet" href="public/css/chat.css">
 
-<div class="chat-layout">
+<div id="chat-layout" class="chat-layout <?= $isChatActive ? 'show-chat' : '' ?>">
     <!-- Chat Sidebar -->
     <div class="chat-sidebar">
         <div class="chat-sidebar-header flex items-center justify-between">
@@ -93,7 +97,7 @@ include '../layouts/header.php';
                 </div>
             </a>
             <!-- Global Chat Item -->
-            <a href="views/chat/index.php" class="chat-list-item <?=!$user_id ? 'active' : ''?>">
+            <a href="views/chat/index.php?global=1" class="chat-list-item <?=!$user_id ? 'active' : ''?>">
                 <div class="avatar"
                     style="background: #ffffff; display: flex; align-items: center; justify-content: center; color: #000;">
                     <i class="fa-solid fa-globe"></i>
@@ -123,6 +127,9 @@ endforeach; ?>
     <!-- Chat Window -->
     <div class="chat-window">
         <div class="chat-header">
+            <button class="mobile-back-btn" onclick="document.getElementById('chat-layout').classList.remove('show-chat')">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
             <?php if ($user_id): ?>
             <img src="public/images/avatars/<?= htmlspecialchars($otherUser['avatar'] ?: 'user.jpg')?>"
                 class="avatar">

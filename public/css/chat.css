@@ -330,34 +330,64 @@
 
 /* ── Mobile ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-
     .chat-layout,
     .gchat-layout {
-        flex-direction: column;
-        height: calc(100vh - 80px);
-        /* Fill most of the screen */
+        position: relative;
+        display: flex;
+        height: calc(100vh - 80px); /* Full height on mobile */
         border-radius: 0;
-        margin-bottom: 20px;
+        margin-bottom: 0;
+        border: none;
+        overflow: hidden;
     }
 
+    /* The sidebar takes full absolute dimensions, sliding on/off */
     .chat-sidebar,
     .gchat-sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: 35%;
-        /* Sidebar takes upper 35% */
+        height: 100%;
+        z-index: 20;
         border-right: none;
-        border-bottom: 1px solid var(--border-color);
+        background: var(--bg-color);
+        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        transform: translateX(0); /* Default: sidebar visible */
     }
 
+    /* The chat window fills the background */
     .chat-window,
     .gchat-window {
-        flex: 1;
-        /* Window takes remaining 65% */
         width: 100%;
-        height: 65%;
+        height: 100%;
+        flex: 1;
+        z-index: 10;
+        border-radius: 0;
+    }
+
+    /* When the layout has semantic 'show-chat' class, hide the sidebar to the left */
+    .chat-layout.show-chat .chat-sidebar,
+    .gchat-layout.show-chat .gchat-sidebar {
+        transform: translateX(-100%);
     }
 
     .message {
         max-width: 90%;
     }
+
+    .mobile-back-btn {
+        display: block !important;
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 5px 10px;
+        margin-right: 5px;
+    }
+}
+
+.mobile-back-btn {
+    display: none; /* hidden on desktop */
 }
