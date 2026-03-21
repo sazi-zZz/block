@@ -20,6 +20,11 @@ jobs:
         sed -i "s|DB_USER_PLACEHOLDER|${{ secrets.DB_USER }}|g" config/db.php
         sed -i "s|DB_PASS_PLACEHOLDER|${{ secrets.DB_PASS }}|g" config/db.php
 
+    - name: 📧 Inject Mail Secrets into includes/mailer.php
+      run: |
+        sed -i "s|MAIL_USER_PLACEHOLDER|${{ secrets.MAIL_USER }}|g" includes/mailer.php
+        sed -i "s|MAIL_PASS_PLACEHOLDER|${{ secrets.MAIL_PASS }}|g" includes/mailer.php
+
     - name: 🚀 FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:

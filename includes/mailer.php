@@ -5,24 +5,32 @@ use PHPMailer\PHPMailer\SMTP;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-function sendWelcomeEmail($toEmail, $username)
+// Mail credentials — injected by GitHub Actions on deploy
+// For local development: set these to your own test values
+define('MAIL_FROM', 'MAIL_USER_PLACEHOLDER');
+define('MAIL_PASS_VAL', 'MAIL_PASS_PLACEHOLDER');
+define('MAIL_HOST', 'mail.blocknet.online');
+define('MAIL_PORT', 465);
+
+function _createMailer()
 {
     $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host       = MAIL_HOST;
+    $mail->Port       = MAIL_PORT;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // port 465 SSL
+    $mail->SMTPAuth   = true;
+    $mail->Username   = MAIL_FROM;
+    $mail->Password   = MAIL_PASS_VAL;
+    $mail->setFrom(MAIL_FROM, 'BLOCKNET Platform');
+    return $mail;
+}
+
+function sendWelcomeEmail($toEmail, $username)
+{
+    $mail = _createMailer();
     try {
-        // Use local SMTP relay (localhost:25, no auth) —
-        // This is the standard cPanel/LiteSpeed mail setup.
-        // PHP mail() is disabled on this host, so we go through
-        // the server's own MTA directly.
-        $mail->isSMTP();
-        $mail->Host       = 'localhost';
-        $mail->Port       = 25;
-        $mail->SMTPAuth   = false;
-        $mail->SMTPSecure = '';          // no encryption for local relay
-        $mail->SMTPAutoTLS = false;      // prevent forced TLS upgrade
-
-        $mail->setFrom('no-reply@blocknet.online', 'BLOCKNET Platform');
         $mail->addAddress($toEmail, $username);
-
         $mail->isHTML(true);
         $mail->Subject = 'Welcome to BLOCKNET, ' . $username . '!';
 
@@ -63,24 +71,15 @@ function sendWelcomeEmail($toEmail, $username)
     }
     catch (Exception $e) {
         error_log('BLOCKNET welcome email error: ' . $mail->ErrorInfo);
-        return false; // Never block registration
+        return false;
     }
 }
 
 function sendPasswordResetEmail($toEmail, $username, $resetLink)
 {
-    $mail = new PHPMailer(true);
+    $mail = _createMailer();
     try {
-        $mail->isSMTP();
-        $mail->Host       = 'localhost';
-        $mail->Port       = 25;
-        $mail->SMTPAuth   = false;
-        $mail->SMTPSecure = '';
-        $mail->SMTPAutoTLS = false;
-
-        $mail->setFrom('no-reply@blocknet.online', 'BLOCKNET Platform');
         $mail->addAddress($toEmail, $username);
-
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Request - BLOCKNET';
         $mail->Body = "
