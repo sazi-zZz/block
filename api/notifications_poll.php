@@ -25,7 +25,8 @@ $response = [
     'max_notif_id' => $last_notif_id,
     'max_msg_id' => $last_msg_id,
     'new_notifications' => [],
-    'new_messages' => []
+    'new_messages' => [],
+    'unread_by_sender' => []
 ];
 
 // Unread counts
@@ -36,6 +37,16 @@ $response['unread_notifications'] = $stmt->fetchColumn();
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM messages WHERE receiver_id = ? AND is_read = 0");
 $stmt->execute([$user_id]);
 $response['unread_messages'] = $stmt->fetchColumn();
+
+// Group unread messages by sender for sidebar badges
+$stmt = $pdo->prepare("
+    SELECT sender_id, COUNT(*) as count 
+    FROM messages 
+    WHERE receiver_id = ? AND is_read = 0 
+    GROUP BY sender_id
+");
+$stmt->execute([$user_id]);
+$response['unread_by_sender'] = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
 
 // Get max IDs

@@ -148,7 +148,33 @@ function startNotificationPolling() {
                 } else {
                     updateBadge(notifLinks, data.unread_notifications);
                 }
+
+                // Main navigation chat badge
                 updateBadge(chatLinks, data.unread_messages);
+
+                // Update conversation-specific badges inside sidebar
+                if (data.unread_by_sender) {
+                    const allChatItems = document.querySelectorAll('.chat-list-item[href*="user_id="]');
+                    allChatItems.forEach(link => {
+                        const urlParams = new URLSearchParams(link.href.split('?')[1]);
+                        const senderId = urlParams.get('user_id');
+                        if (senderId) {
+                            const count = data.unread_by_sender[senderId] || 0;
+                            let badge = link.querySelector('.notif-badge-chat-item');
+                            if (count > 0) {
+                                if (!badge) {
+                                    badge = document.createElement('span');
+                                    badge.className = 'notif-badge-chat-item';
+                                    badge.style.cssText = 'background: var(--danger); color: white; border-radius: 12px; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; margin-left: auto;';
+                                    link.appendChild(badge);
+                                }
+                                badge.textContent = count > 99 ? '99+' : count;
+                            } else if (badge) {
+                                badge.remove();
+                            }
+                        }
+                    });
+                }
             })
             .catch(err => console.error(err));
     };
