@@ -13,7 +13,7 @@ $group = $group_id ? $groupModel->getGroup($group_id, $me) : null;
 
 if ($group_id && !$group) {
     // Not a member or group doesn't exist
-    header('Location: /views/chat/index.php');
+    header('Location: ' . BASE_URL . 'views/chat/index.php');
     exit;
 }
 
@@ -156,18 +156,26 @@ include '../layouts/header.php';
         <p class="text-muted" style="margin:0; font-size:0.9rem;">Create groups and chat with up to 50 members.</p>
     </div>
     <div class="flex gap-2">
-        <a href="views/chat/index.php" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> DMs</a>
+        <a href="<?= BASE_URL ?>views/chat/index.php" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> DMs</a>
         <button class="btn btn-secondary" id="open-create-modal-btn">
             <i class="fa-solid fa-plus"></i> New Group
         </button>
     </div>
 </div>
 
-<div id="gchat-layout" class="gchat-layout <?= $group ? 'show-chat' : '' ?>">
+<div id="gchat-layout" class="gchat-layout <?= $group ? 'show-chat' : ''?>">
     <!-- Left: group list -->
     <div class="card gchat-sidebar p-0">
-        <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color);">
-            <strong>My Groups</strong>
+        <div class="flex items-center justify-between" style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color);">
+            <div class="flex items-center gap-2">
+                <a href="<?= BASE_URL ?>views/chat/index.php" class="btn btn-sm btn-secondary" style="padding: 0.3rem 0.5rem;" title="Back to DMs">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <strong>My Groups</strong>
+            </div>
+            <button class="btn btn-sm btn-secondary" id="open-create-modal-sidebar-btn" style="padding: 0.3rem 0.6rem;" title="New Group">
+                <i class="fa-solid fa-plus"></i>
+            </button>
         </div>
         <div id="group-list" style="padding: 0.5rem; overflow-y: auto; flex: 1;">
             <?php
@@ -179,10 +187,10 @@ else:
     foreach ($myGroups as $g):
         $active = ($group_id == $g['id']) ? 'active' : '';
         $photoSrc = $g['photo']
-            ? 'public/images/group_photos/' . htmlspecialchars($g['photo'])
+            ? BASE_URL . 'public/images/group_photos/' . htmlspecialchars($g['photo'])
             : null;
 ?>
-            <a href="views/chat/group.php?id=<?= $g['id']?>" class="group-list-item <?= $active?>">
+            <a href="<?= BASE_URL ?>views/chat/group.php?id=<?= $g['id']?>" class="group-list-item <?= $active?>">
                 <div class="gchat-group-photo">
                     <?php if ($photoSrc): ?>
                     <img src="<?= $photoSrc?>" alt="group">
@@ -229,12 +237,13 @@ endif; ?>
 else: ?>
         <!-- Header -->
         <div class="gchat-header">
-            <button class="mobile-back-btn" onclick="document.getElementById('gchat-layout').classList.remove('show-chat')">
+            <button class="mobile-back-btn"
+                onclick="document.getElementById('gchat-layout').classList.remove('show-chat')">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <div class="gchat-group-photo">
                 <?php if ($group['photo']): ?>
-                <img src="public/images/group_photos/<?= htmlspecialchars($group['photo'])?>" alt="group photo"
+                <img src="<?= BASE_URL ?>public/images/group_photos/<?= htmlspecialchars($group['photo'])?>" alt="group photo"
                     id="group-photo-img">
                 <?php
     else: ?>
@@ -444,9 +453,9 @@ endif; ?>
 
 <script>
     (function () {
-        const GROUP_ID = <?= json_encode($group ? (int)$group['id'] : null)?>;
-        const IS_CREATOR = <?= json_encode($group ? (bool)$group['is_creator'] : false)?>;
-        const ME = <?= json_encode($me)?>;
+        const GROUP_ID = <?= json_encode($group ? (int)$group['id'] : null) ?>;
+        const IS_CREATOR = <?= json_encode($group ? (bool)$group['is_creator'] : false) ?>;
+        const ME = <?= json_encode($me) ?>;
 
         // ── Helpers ──────────────────────────────────────────────────────────────
         const esc = s => (s ?? '').toString()
@@ -469,7 +478,7 @@ endif; ?>
         });
 
         // ── Create Group ──────────────────────────────────────────────────────────
-        const openCreateBtns = ['open-create-modal-btn', 'open-create-modal-btn2'];
+        const openCreateBtns = ['open-create-modal-btn', 'open-create-modal-btn2', 'open-create-modal-sidebar-btn'];
         openCreateBtns.forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('click', () => openModal('create-group-modal'));
@@ -514,13 +523,13 @@ endif; ?>
 
                 const fd = new FormData(createForm);
                 fd.append('action', 'create');
-                const res = await fetch('api/group_chat.php', { method: 'POST', body: fd });
+                const res = await fetch(`${window.BASE_URL}api/group_chat.php`, { method: 'POST', body: fd });
                 const data = await res.json();
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fa-solid fa-plus"></i> Create Group';
 
                 if (data.success) {
-                    window.location.href = `/views/chat/group.php?id=${data.group_id}`;
+                window.location.href = `${window.BASE_URL}views/chat/group.php?id=${data.group_id}`;
                 } else {
                     showToastMsg('Error', data.error || 'Failed to create group.');
                 }
@@ -545,8 +554,8 @@ endif; ?>
         const renderMessage = msg => {
             const isMine = msg.is_mine;
             const avatar = msg.avatar
-                ? `/public/images/avatars/${msg.avatar}`
-                : 'public/images/avatars/user.jpg';
+                ? `${window.BASE_URL}public/images/avatars/${msg.avatar}`
+                : `${window.BASE_URL}public/images/avatars/user.jpg`;
 
             if (isMine) {
                 return `
@@ -559,12 +568,12 @@ endif; ?>
             }
             return `
         <div class="message flex gap-2 chat-bubble-received" style="max-width:80%;">
-            <a href="views/user/profile.php?id=${msg.sender_id}">
-                <img src="${avatar}" class="avatar avatar-sm flex-shrink-0" style="width:32px; height:32px; object-fit:cover;" onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
+            <a href="${window.BASE_URL}views/user/profile.php?id=${msg.sender_id}">
+                <img src="${avatar}" class="avatar avatar-sm flex-shrink-0" style="width:32px; height:32px; object-fit:cover;" onerror="this.src='${window.BASE_URL}public/images/avatars/user.jpg'; this.onerror=null;">
             </a>
             <div style="background:var(--bg-tertiary); padding:0.625rem 1rem; border-radius:18px 18px 18px 4px; border:1px solid var(--border-color); font-size:0.9375rem; line-height:1.5;">
                 <strong style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:2px;">
-                    <a href="views/user/profile.php?id=${msg.sender_id}" style="text-decoration:none; color:inherit;">${esc(msg.username)}</a>
+                    <a href="${window.BASE_URL}views/user/profile.php?id=${msg.sender_id}" style="text-decoration:none; color:inherit;">${esc(msg.username)}</a>
                 </strong>
                 ${esc(msg.content)}
                 <small style="display:block; font-size:0.65rem; color:var(--text-muted); margin-top:4px;" title="${esc(msg.exact_time)}">${esc(msg.time_ago)}</small>
@@ -573,7 +582,7 @@ endif; ?>
         };
 
         const fetchMessages = () => {
-            fetch(`/api/group_chat.php?action=messages&group_id=${GROUP_ID}`)
+            fetch(`${window.BASE_URL}api/group_chat.php?action=messages&group_id=${GROUP_ID}`)
                 .then(r => r.json())
                 .then(data => {
                     if (!Array.isArray(data)) return;
@@ -597,7 +606,7 @@ endif; ?>
             fd.append('action', 'send_message');
             fd.append('group_id', GROUP_ID);
             fd.append('content', content);
-            const res = await fetch('api/group_chat.php', { method: 'POST', body: fd });
+            const res = await fetch(`${window.BASE_URL}api/group_chat.php`, { method: 'POST', body: fd });
             const data = await res.json();
             sendBtn.disabled = false;
             if (data.success) {
@@ -630,23 +639,23 @@ endif; ?>
         };
 
         const loadMembers = async () => {
-            const res = await fetch(`/api/group_chat.php?action=members&group_id=${GROUP_ID}`);
+            const res = await fetch(`${window.BASE_URL}api/group_chat.php?action=members&group_id=${GROUP_ID}`);
             const data = await res.json();
             if (!Array.isArray(data)) return;
             const countEl = document.getElementById('members-count');
             if (countEl) countEl.textContent = ` (${data.length}/50)`;
             document.getElementById('members-list').innerHTML = data.map(m => {
                 const avatar = m.avatar
-                    ? `/public/images/avatars/${m.avatar}`
-                    : 'public/images/avatars/user.jpg';
+                    ? `${window.BASE_URL}public/images/avatars/${m.avatar}`
+                    : `${window.BASE_URL}public/images/avatars/user.jpg`;
                 const crownBadge = m.is_creator ? '&nbsp;<i class="fa-solid fa-crown" style="color:gold; font-size:0.75rem;" title="Group Creator"></i>' : '';
                 const kickBtn = (IS_CREATOR && !m.is_creator && m.id != ME)
                     ? `<button class="btn btn-secondary kick-btn" style="color:var(--danger); font-size:0.72rem; padding:0.2rem 0.45rem;" onclick="kickMember(${m.id}, \`${esc(m.username)}\`)"><i class="fa-solid fa-user-xmark"></i></button>`
                     : '';
                 return `
             <div class="gchat-member-item">
-                <img src="${avatar}" class="avatar avatar-sm" style="width:28px; height:28px; object-fit:cover; flex-shrink:0;" onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
-                <a href="views/user/profile.php?id=${m.id}" style="font-size:0.85rem; text-decoration:none; color:inherit; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;">${esc(m.username)}${crownBadge}</a>
+                <img src="${avatar}" class="avatar avatar-sm" style="width:28px; height:28px; object-fit:cover; flex-shrink:0;" onerror="this.src='${window.BASE_URL}public/images/avatars/user.jpg'; this.onerror=null;">
+                <a href="${window.BASE_URL}views/user/profile.php?id=${m.id}" style="font-size:0.85rem; text-decoration:none; color:inherit; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;">${esc(m.username)}${crownBadge}</a>
                 ${kickBtn}
             </div>`;
             }).join('');
@@ -658,7 +667,7 @@ endif; ?>
             fd.append('action', 'kick_member');
             fd.append('group_id', GROUP_ID);
             fd.append('user_id', userId);
-            const res = await fetch('api/group_chat.php', { method: 'POST', body: fd });
+            const res = await fetch(`${window.BASE_URL}api/group_chat.php`, { method: 'POST', body: fd });
             const data = await res.json();
             if (data.success) { showToastMsg('Done', `${username} was removed.`); loadMembers(); }
             else showToastMsg('Error', data.error || 'Failed.');
@@ -679,7 +688,7 @@ endif; ?>
                 return;
             }
             searchTimer = setTimeout(async () => {
-                const res = await fetch(`/api/group_chat.php?action=search_users&group_id=${GROUP_ID}&q=${encodeURIComponent(query)}`);
+                const res = await fetch(`${window.BASE_URL}api/group_chat.php?action=search_users&group_id=${GROUP_ID}&q=${encodeURIComponent(query)}`);
                 const data = await res.json();
                 if (!Array.isArray(data) || data.length === 0) {
                     resultsEl.style.display = 'none';
@@ -689,10 +698,10 @@ endif; ?>
                 noResultsEl.style.display = 'none';
                 resultsEl.innerHTML = data.map(u => {
                     const avatar = u.avatar
-                        ? `/public/images/avatars/${u.avatar}`
-                        : 'public/images/avatars/user.jpg';
+                        ? `${window.BASE_URL}public/images/avatars/${u.avatar}`
+                        : `${window.BASE_URL}public/images/avatars/user.jpg`;
                     return `<div class="search-result-item" onclick="addMember(${u.id}, \`${esc(u.username)}\`)">
-                    <img src="${avatar}" class="avatar avatar-sm" style="width:28px;height:28px;object-fit:cover;" onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">
+                    <img src="${avatar}" class="avatar avatar-sm" style="width:28px;height:28px;object-fit:cover;" onerror="this.src='${window.BASE_URL}public/images/avatars/user.jpg'; this.onerror=null;">
                     <span>${esc(u.username)}</span>
                 </div>`;
                 }).join('');
@@ -707,7 +716,7 @@ endif; ?>
             fd.append('action', 'add_member');
             fd.append('group_id', GROUP_ID);
             fd.append('user_id', userId);
-            const res = await fetch('api/group_chat.php', { method: 'POST', body: fd });
+            const res = await fetch(`${window.BASE_URL}api/group_chat.php`, { method: 'POST', body: fd });
             const data = await res.json();
             if (data.success) {
                 showToastMsg('Added!', `${username} was added to the group.`);
@@ -800,7 +809,7 @@ endif; ?>
             fd.append('photo', file);
 
             try {
-                const res = await fetch('api/group_chat.php', { method: 'POST', body: fd });
+                const res = await fetch(`${window.BASE_URL}api/group_chat.php`, { method: 'POST', body: fd });
                 const data = await res.json();
 
                 if (data.success) {
@@ -808,7 +817,7 @@ endif; ?>
                     const photoContainer = document.querySelector('.gchat-header .gchat-group-photo');
                     if (photoContainer) {
                         const newImg = document.createElement('img');
-                        newImg.src = `/public/images/group_photos/${data.photo}?t=${Date.now()}`;
+                        newImg.src = `${window.BASE_URL}public/images/group_photos/${data.photo}?t=${Date.now()}`;
                         newImg.alt = 'group photo';
                         newImg.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;opacity:0;transition:opacity 0.3s ease;';
                         photoContainer.innerHTML = '';
@@ -819,7 +828,7 @@ endif; ?>
                     // Also refresh the sidebar thumbnail for this group (if present)
                     const sidebarItem = document.querySelector(`.group-list-item.active .gchat-group-photo`);
                     if (sidebarItem) {
-                        sidebarItem.innerHTML = `<img src="public/images/group_photos/${data.photo}?t=${Date.now()}" alt="group" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+                        sidebarItem.innerHTML = `<img src="${window.BASE_URL}public/images/group_photos/${data.photo}?t=${Date.now()}" alt="group" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
                     }
                     if (statusDiv) {
                         statusDiv.style.cssText = 'display:block; font-size:0.8rem; color:var(--success,#34c759); margin-top:0.35rem; white-space:nowrap;';
@@ -857,12 +866,12 @@ endif; ?>
             const fd = new FormData();
             fd.append('action', 'leave_group');
             fd.append('group_id', GROUP_ID);
-            const res = await fetch('api/group_chat.php', { method: 'POST', body: fd });
+            const res = await fetch(`${window.BASE_URL}api/group_chat.php`, { method: 'POST', body: fd });
             const data = await res.json();
             btn.disabled = false;
             btn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Leave Group';
             if (data.success) {
-                window.location.href = 'views/chat/group.php';
+                window.location.href = `${window.BASE_URL}views/chat/group.php`;
             } else {
                 closeModal('leave-group-modal');
                 showToastMsg('Error', data.error || 'Failed to leave group.');
@@ -877,12 +886,12 @@ endif; ?>
             const fd = new FormData();
             fd.append('action', 'delete_group');
             fd.append('group_id', GROUP_ID);
-            const res = await fetch('api/group_chat.php', { method: 'POST', body: fd });
+            const res = await fetch(`${window.BASE_URL}api/group_chat.php`, { method: 'POST', body: fd });
             const data = await res.json();
             btn.disabled = false;
             btn.innerHTML = '<i class="fa-solid fa-trash"></i> Delete Group';
             if (data.success) {
-                window.location.href = 'views/chat/group.php';
+                window.location.href = `${window.BASE_URL}views/chat/group.php`;
             } else {
                 closeModal('delete-group-modal');
                 showToastMsg('Error', data.error || 'Failed to delete group.');
@@ -902,7 +911,7 @@ endif; ?>
                 fd.append('action', 'update_name');
                 fd.append('group_id', GROUP_ID);
                 fd.append('name', newName.trim());
-                const res = await fetch('api/group_chat.php', { method: 'POST', body: fd });
+                const res = await fetch(`${window.BASE_URL}api/group_chat.php`, { method: 'POST', body: fd });
                 const data = await res.json();
                 if (data.success) {
                     document.getElementById('group-name-text').textContent = data.name;

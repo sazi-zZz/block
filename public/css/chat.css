@@ -332,13 +332,18 @@
 @media (max-width: 768px) {
     .chat-layout,
     .gchat-layout {
-        position: relative;
-        display: flex;
-        height: calc(100vh - 80px); /* Full height on mobile */
+        position: fixed;
+        top: 56px;
+        left: 0;
+        right: 0;
+        bottom: 58px; /* account for bottom nav */
+        height: auto; /* overrides the inline calc height */
         border-radius: 0;
-        margin-bottom: 0;
+        margin: 0;
         border: none;
         overflow: hidden;
+        z-index: 150;
+        background: var(--bg-color);
     }
 
     /* The sidebar takes full absolute dimensions, sliding on/off */

@@ -103,7 +103,7 @@ function updateBadge(links, count) {
 
 function startNotificationPolling() {
     const pollServer = () => {
-        fetch('api/notifications_poll.php?last_notif_id=' + lastNotifId + '&last_msg_id=' + lastMsgId)
+        fetch((window.BASE_URL || '/') + 'api/notifications_poll.php?last_notif_id=' + lastNotifId + '&last_msg_id=' + lastMsgId)
             .then(res => res.json())
             .then(data => {
                 if (data.error) return; // not logged in
@@ -115,16 +115,16 @@ function startNotificationPolling() {
                 if (data.has_new_notification && data.new_notifications) {
                     data.new_notifications.forEach(n => {
                         let title = 'New Notification';
-                        let link = 'views/notifications/index.php';
+                        let link = (window.BASE_URL || '/') + 'views/notifications/index.php';
                         if (n.type === 'like' || n.type === 'comment') {
                             title = n.type === 'like' ? 'New Like' : 'New Comment';
-                            link = 'views/posts/view.php?id=' + n.source_id;
+                            link = (window.BASE_URL || '/') + 'views/posts/view.php?id=' + n.source_id;
                         } else if (n.type === 'follow') {
                             title = 'New Follower';
-                            link = 'views/user/profile.php?id=' + n.source_id;
+                            link = (window.BASE_URL || '/') + 'views/user/profile.php?id=' + n.source_id;
                         } else if (n.type === 'join') {
                             title = 'New Member';
-                            link = 'views/blocks/view.php?id=' + n.source_id;
+                            link = (window.BASE_URL || '/') + 'views/blocks/view.php?id=' + n.source_id;
                         }
                         showToast(title, n.content, link);
                     });
@@ -132,7 +132,7 @@ function startNotificationPolling() {
 
                 if (data.has_new_message && data.new_messages) {
                     data.new_messages.forEach(m => {
-                        showToast('New Message from ' + (m.sender_name || 'Someone'), m.content, 'views/chat/index.php?user_id=' + m.sender_id);
+                        showToast('New Message from ' + (m.sender_name || 'Someone'), m.content, (window.BASE_URL || '/') + 'views/chat/index.php?user_id=' + m.sender_id);
                     });
                 }
 
@@ -143,7 +143,7 @@ function startNotificationPolling() {
                 const chatLinks = document.querySelectorAll('a[href*="views/chat/index.php"]');
 
                 // If currently on notifications page, force remove badge visually without waiting for server response
-                if (window.location.pathname.includes('views/notifications/')) {
+                if (window.location.href.includes('views/notifications/')) {
                     updateBadge(notifLinks, 0);
                 } else {
                     updateBadge(notifLinks, data.unread_notifications);
@@ -201,7 +201,7 @@ window.toggleLike = function (button, postId) {
     const formData = new FormData();
     formData.append('post_id', postId);
 
-    fetch('api/like.php', {
+    fetch((window.BASE_URL || '/') + 'api/like.php', {
         method: 'POST',
         body: formData
     })

@@ -35,7 +35,7 @@ include '../layouts/header.php';
         <h2 class="mb-1">Chats</h2>
         <p class="text-muted" style="margin:0; font-size:0.9rem;">Connect globally or message users directly.</p>
     </div>
-    <a href="views/chat/group.php" class="btn btn-secondary">
+    <a href="<?= BASE_URL ?>views/chat/group.php" class="btn btn-secondary">
         <i class="fa-solid fa-users"></i> Group Chats
     </a>
 </div>
@@ -74,19 +74,19 @@ include '../layouts/header.php';
 <!-- Custom chat CSS -->
 <link rel="stylesheet" href="<?= BASE_URL ?>public/css/chat.css">
 
-<div id="chat-layout" class="chat-layout <?= $isChatActive ? 'show-chat' : '' ?>">
+<div id="chat-layout" class="chat-layout <?= $isChatActive ? 'show-chat' : ''?>">
     <!-- Chat Sidebar -->
     <div class="chat-sidebar">
         <div class="chat-sidebar-header flex items-center justify-between">
             <span>Chats</span>
-            <a href="views/chat/group.php" class="btn btn-sm btn-secondary"
+            <a href="<?= BASE_URL ?>views/chat/group.php" class="btn btn-sm btn-secondary"
                 style="border-radius: 50%; width: 36px; height: 36px; padding: 0;" title="Group Chats">
                 <i class="fa-solid fa-users"></i>
             </a>
         </div>
         <div class="chat-list">
             <!-- Group Chats Link -->
-            <a href="views/chat/group.php" class="chat-list-item">
+            <a href="<?= BASE_URL ?>views/chat/group.php" class="chat-list-item">
                 <div class="avatar"
                     style="background: #222222; display: flex; align-items: center; justify-content: center; color: #ffffff;">
                     <i class="fa-solid fa-users"></i>
@@ -97,7 +97,7 @@ include '../layouts/header.php';
                 </div>
             </a>
             <!-- Global Chat Item -->
-            <a href="views/chat/index.php?global=1" class="chat-list-item <?=!$user_id ? 'active' : ''?>">
+            <a href="<?= BASE_URL ?>views/chat/index.php?global=1" class="chat-list-item <?=!$user_id ? 'active' : ''?>">
                 <div class="avatar"
                     style="background: #ffffff; display: flex; align-items: center; justify-content: center; color: #000;">
                     <i class="fa-solid fa-globe"></i>
@@ -108,10 +108,11 @@ include '../layouts/header.php';
                 </div>
             </a>
             <?php foreach ($recentConversations as $conv): ?>
-            <a href="views/chat/index.php?user_id=<?= $conv['id']?>"
+            <a href="<?= BASE_URL ?>views/chat/index.php?user_id=<?= $conv['id']?>"
                 class="chat-list-item <?=($user_id == $conv['id']) ? 'active' : ''?>">
-                <img src="public/images/avatars/<?= htmlspecialchars($conv['avatar'] ?: 'user.jpg')?>"
-                    class="avatar">
+                <img src="<?= BASE_URL ?>public/images/avatars/<?= htmlspecialchars($conv['avatar'] ?: 'user.jpg')?>"
+                    class="avatar"
+                    onerror="this.src='<?= BASE_URL ?>public/images/avatars/user.jpg'; this.onerror=null;">
                 <div class="chat-list-item-content">
                     <div class="chat-list-item-name">
                         <?= htmlspecialchars($conv['username'])?>
@@ -127,12 +128,13 @@ endforeach; ?>
     <!-- Chat Window -->
     <div class="chat-window">
         <div class="chat-header">
-            <button class="mobile-back-btn" onclick="document.getElementById('chat-layout').classList.remove('show-chat')">
+            <button class="mobile-back-btn"
+                onclick="document.getElementById('chat-layout').classList.remove('show-chat')">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <?php if ($user_id): ?>
-            <img src="public/images/avatars/<?= htmlspecialchars($otherUser['avatar'] ?: 'user.jpg')?>"
-                class="avatar">
+            <img src="<?= BASE_URL ?>public/images/avatars/<?= htmlspecialchars($otherUser['avatar'] ?: 'user.jpg')?>" class="avatar"
+                onerror="this.src='<?= BASE_URL ?>public/images/avatars/user.jpg'; this.onerror=null;">
             <div class="flex flex-col">
                 <strong style="font-size: 1.1rem;">
                     <?= htmlspecialchars($activeChatName)?>
@@ -197,7 +199,7 @@ endif; ?>
         const chatMessages = document.getElementById('chat-messages');
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input-content');
-        const currentUserId = <?= json_encode($user_id)?>;
+        const currentUserId = <?= json_encode($user_id) ?>;
 
         let isScrolledToBottom = true;
 
@@ -208,7 +210,7 @@ endif; ?>
         const getMediaHtml = (media) => {
             if (!media) return '';
             const ext = media.split('.').pop().toLowerCase();
-            const url = `/public/files/chat_uploads/${media}`;
+            const url = `${window.BASE_URL}public/files/chat_uploads/${media}`;
 
             if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
                 return `<div class="mt-2"><a href="${url}" target="_blank"><img src="${url}" style="max-height:200px; max-width: 100%; border-radius: 8px;"></a></div>`;
@@ -223,7 +225,7 @@ endif; ?>
 
         const renderMessage = (msg) => {
             const isMine = msg.is_mine;
-            const avatar = msg.avatar ? `/public/images/avatars/${msg.avatar}` : 'public/images/avatars/user.jpg';
+            const avatar = msg.avatar ? `${window.BASE_URL}public/images/avatars/${msg.avatar}` : `${window.BASE_URL}public/images/avatars/user.jpg`;
             const mediaHtml = getMediaHtml(msg.media);
             const type = isMine ? 'sent' : 'received';
             const showName = !isMine && !currentUserId; // Only show names in global chat for others
@@ -236,7 +238,7 @@ endif; ?>
             return `
                 ${nameHtml}
                 <div class="message ${type}">
-                    ${!isMine ? `<img src="${avatar}" class="message-avatar" onerror="this.src='public/images/avatars/user.jpg'; this.onerror=null;">` : '<div style="width: 28px; margin: 0 8px;"></div>'}
+                    ${!isMine ? `<img src="${avatar}" class="message-avatar" onerror="this.src='${window.BASE_URL}public/images/avatars/user.jpg'; this.onerror=null;">` : '<div style="width: 28px; margin: 0 8px;"></div>'}
                     <div class="message-bubble" title="${msg.exact_time}">
                         ${escapeHtml(msg.content)}
                         ${mediaHtml}
@@ -246,7 +248,9 @@ endif; ?>
         };
 
         const fetchMessages = () => {
-            const url = currentUserId ? `/api/chat.php?user_id=${currentUserId}` : 'api/chat.php';
+            const url = currentUserId
+                ? `${window.BASE_URL}api/chat.php?user_id=${currentUserId}`
+                : `${window.BASE_URL}api/chat.php`;
 
             fetch(url).then(res => res.json()).then(data => {
                 if (Array.isArray(data)) {
@@ -319,7 +323,7 @@ endif; ?>
             if (submitBtn) submitBtn.disabled = true;
             if (progressDiv && hasFiles) progressDiv.style.display = 'block';
 
-            fetch('api/chat.php', {
+            fetch(`${window.BASE_URL}api/chat.php`, {
                 method: 'POST',
                 body: formData
             }).then(res => res.json()).then(data => {

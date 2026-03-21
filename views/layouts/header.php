@@ -41,6 +41,8 @@
     <link rel="stylesheet" href="<?= BASE_URL?>public/css/style.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?= BASE_URL?>public/Block.png">
+    <!-- JS Base URL (used by inline and external scripts for API/asset paths) -->
+    <script>window.BASE_URL = <?= json_encode(BASE_URL) ?>;</script>
 </head>
 
 <body>
