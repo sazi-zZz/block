@@ -75,7 +75,7 @@ endif; ?>
     <a href="<?= BASE_URL?>views/blocks/index.php" class="btn btn-primary mt-2">Explore Blocks</a>
     <?php
 else: ?>
-    <form method="POST" enctype="multipart/form-data">
+    <form action="<?= BASE_URL ?>views/posts/create.php" method="POST" enctype="multipart/form-data">
         <?php if ($repost_id && $repost_data): ?>
         <input type="hidden" name="repost_id" value="<?= htmlspecialchars($repost_id)?>">
         <div class="card bg-darker p-3 mb-3"

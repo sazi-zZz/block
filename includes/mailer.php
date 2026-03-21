@@ -81,6 +81,7 @@ function sendPasswordResetEmail($toEmail, $username, $resetLink)
     try {
         $mail->addAddress($toEmail, $username);
         $mail->isHTML(true);
+        $mail->Subject = 'Reset Your BLOCKNET Password';
         $protocol    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
         $host        = $_SERVER['HTTP_HOST'] ?? 'blocknet.online';
         $logoUrl     = $protocol . '://' . $host . '/public/Block.png';

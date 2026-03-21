@@ -210,9 +210,8 @@ endif; ?>
             <h5 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">
                 <?= htmlspecialchars($post['repost_title'])?>
             </h5>
-            <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 0;">
-                <?= nl2br(htmlspecialchars(substr($post['repost_content'], 0, 150)))?>
-                <?= strlen($post['repost_content']) > 150 ? '...' : ''?>
+            <p class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                <?= nl2br(htmlspecialchars(trim($post['repost_content'])))?>
             </p>
         </a>
     </div>

@@ -72,8 +72,8 @@ include '../layouts/header.php';
 
     <div id="block-desc-container" style="max-width: 600px; margin-left: auto; margin-right: auto; margin-bottom: 1.5rem;">
         <p id="block-desc-text" class="text-muted"
-            style="line-height: 1.6; font-size: 1.0625rem; margin-bottom: 0.25rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap;">
-            <?= htmlspecialchars($block['description'])?>
+            style="line-height: 1.6; font-size: 1.0625rem; margin-bottom: 0.25rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+            <?= nl2br(htmlspecialchars(trim($block['description'])))?>
         </p>
         <button id="block-desc-btn" style="background:none; border:none; display:none; color:var(--text-muted); text-decoration:underline; cursor:pointer; font-size:0.85rem; padding:0; margin:0 auto;" onclick="toggleBlockDesc()">See More</button>
     </div>
