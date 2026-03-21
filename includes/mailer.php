@@ -81,10 +81,16 @@ function sendPasswordResetEmail($toEmail, $username, $resetLink)
     try {
         $mail->addAddress($toEmail, $username);
         $mail->isHTML(true);
-        $mail->Subject = 'Password Reset Request - BLOCKNET';
+        $protocol    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host        = $_SERVER['HTTP_HOST'] ?? 'blocknet.online';
+        $logoUrl     = $protocol . '://' . $host . '/public/Block.png';
+
         $mail->Body = "
             <div style='background-color:#080808;color:#ffffff;padding:40px;font-family:sans-serif;max-width:600px;margin:0 auto;border-radius:12px;'>
-                <h1 style='color:#ffffff;letter-spacing:2px;'>BLOCKNET</h1>
+                <div style='text-align: center; margin-bottom: 30px;'>
+                    <img src='{$logoUrl}' alt='BLOCKNET Logo' style='width: 80px; height: 80px; margin-bottom: 10px;'>
+                    <h1 style='color: #ffffff; font-size: 24px; font-weight: 800; letter-spacing: 2px;'>BLOCKNET</h1>
+                </div>
                 <h2 style='color:#ffffff;'>Password Reset Request</h2>
                 <p style='color:rgba(255,255,255,0.7);'>Hello {$username},</p>
                 <p style='color:rgba(255,255,255,0.7);'>You requested a password reset. Click the button below — this link is valid for <strong>60 minutes</strong>.</p>
