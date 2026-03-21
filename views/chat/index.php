@@ -72,7 +72,7 @@ include '../layouts/header.php';
 </style>
 
 <!-- Custom chat CSS -->
-<link rel="stylesheet" href="public/css/chat.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>public/css/chat.css">
 
 <div id="chat-layout" class="chat-layout <?= $isChatActive ? 'show-chat' : '' ?>">
     <!-- Chat Sidebar -->

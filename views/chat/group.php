@@ -20,7 +20,7 @@ if ($group_id && !$group) {
 include '../layouts/header.php';
 ?>
 
-<link rel="stylesheet" href="public/css/chat.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>public/css/chat.css">
 <style>
     /* ── Group Chat overrides for chat.css ─────────────────────────────────────────────────── */
     .gchat-group-photo {
