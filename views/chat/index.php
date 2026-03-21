@@ -143,14 +143,16 @@ endforeach; ?>
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <?php if ($user_id): ?>
-            <img src="<?= BASE_URL ?>public/images/avatars/<?= htmlspecialchars($otherUser['avatar'] ?: 'user.jpg')?>" class="avatar"
-                onerror="this.src='<?= BASE_URL ?>public/images/avatars/user.jpg'; this.onerror=null;">
-            <div class="flex flex-col">
-                <strong style="font-size: 1.1rem;">
-                    <?= htmlspecialchars($activeChatName)?>
-                </strong>
-                <!-- Can add status indicator here later -->
-            </div>
+            <a href="<?= BASE_URL ?>views/user/profile.php?id=<?= $user_id ?>" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; overflow: hidden;">
+                <img src="<?= BASE_URL ?>public/images/avatars/<?= htmlspecialchars($otherUser['avatar'] ?: 'user.jpg')?>" class="avatar"
+                    onerror="this.src='<?= BASE_URL ?>public/images/avatars/user.jpg'; this.onerror=null;" style="margin: 0;">
+                <div class="flex flex-col overflow-hidden">
+                    <strong style="font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <?= htmlspecialchars($activeChatName)?>
+                    </strong>
+                    <small style="color: var(--text-muted); font-size: 0.75rem;">View Profile</small>
+                </div>
+            </a>
             <?php
 else: ?>
             <div class="avatar"
@@ -242,13 +244,13 @@ endif; ?>
 
             let nameHtml = '';
             if (showName) {
-                nameHtml = `<div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2px; margin-left: ${isMine ? '0' : '44px'}; ${isMine ? 'text-align: right;' : ''}">${escapeHtml(msg.username)}</div>`;
+                nameHtml = `<a href="${window.BASE_URL}views/user/profile.php?id=${msg.sender_id}" style="text-decoration:none; display:block;"><div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2px; margin-left: ${isMine ? '0' : '44px'}; ${isMine ? 'text-align: right;' : ''}">${escapeHtml(msg.username)}</div></a>`;
             }
 
             return `
                 ${nameHtml}
                 <div class="message ${type}">
-                    ${!isMine ? `<img src="${avatar}" class="message-avatar" onerror="this.src='${window.BASE_URL}public/images/avatars/user.jpg'; this.onerror=null;">` : '<div style="width: 28px; margin: 0 8px;"></div>'}
+                    ${!isMine ? `<a href="${window.BASE_URL}views/user/profile.php?id=${msg.sender_id}"><img src="${avatar}" class="message-avatar" onerror="this.src='${window.BASE_URL}public/images/avatars/user.jpg'; this.onerror=null;" style="cursor: pointer;"></a>` : '<div style="width: 28px; margin: 0 8px;"></div>'}
                     <div class="message-bubble" title="${msg.exact_time}">
                         ${escapeHtml(msg.content)}
                         ${mediaHtml}
