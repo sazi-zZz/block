@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['error'] = $uploadError;
             }
             else if (!empty($content) || $media) {
-                $postModel->addComment($id, $_SESSION['user_id'], $content, $parent_id, $media);
+                $new_comment_id = $postModel->addComment($id, $_SESSION['user_id'], $content, $parent_id, $media);
                 $notificationModel = new Notification($pdo);
                 $username = $_SESSION['username'] ?? 'Someone';
                 if ($parent_id) {
@@ -99,7 +99,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     // Refresh page
-    redirect(BASE_URL . 'views/posts/view.php?id=' . $id);
+    $target_fragment = '';
+    if (isset($_POST['action']) && in_array($_POST['action'], ['comment', 'reply'])) {
+        if (!empty($new_comment_id)) {
+            $target_fragment = '#comment-' . $new_comment_id;
+        } else {
+            $target_fragment = '#comments-section';
+        }
+    } elseif (isset($_POST['action']) && $_POST['action'] === 'like') {
+        $target_fragment = '#comments-section';
+    }
+    redirect(BASE_URL . 'views/posts/view.php?id=' . $id . $target_fragment);
 }
 
 $comments = $postModel->getComments($id);
@@ -243,8 +253,11 @@ endif; ?>
     </div>
 </div>
 
-<div class="card">
-    <h3 class="mb-3">Comments</h3>
+<div class="card" id="comments-section">
+    <div class="flex items-center justify-between mb-3" style="flex-wrap: wrap; gap: 0.5rem;">
+        <h3 class="mb-0">Comments</h3>
+        <input type="text" id="commentSearchInput" oninput="filterComments()" placeholder="Search comments by keyword or @user..." class="form-control text-sm" style="flex: 1; max-width: 300px; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-color); padding: 0.4rem 0.8rem; border-radius: 20px;">
+    </div>
 
     <form method="POST" class="mb-3" enctype="multipart/form-data">
         <input type="hidden" name="action" value="comment">
@@ -273,7 +286,7 @@ endif; ?>
 
     <div class="comments-list">
         <?php foreach ($main_comments as $comment): ?>
-        <div class="comment mb-3" style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+        <div class="comment mb-3" id="comment-<?= $comment['id'] ?>" style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
             <div class="flex items-center mb-1">
                 <a href="<?= BASE_URL?>views/user/profile.php?id=<?= $comment['user_id']?>"
                     style="text-decoration:none; color:inherit; display:flex; align-items:center;">
@@ -320,6 +333,11 @@ endif; ?>
                 <?php if ($comment['user_id'] == $_SESSION['user_id']): ?>
                 <a href="<?= BASE_URL?>views/posts/edit_comment.php?id=<?= $comment['id']?>"
                     class="text-sm text-muted">Edit</a>
+                <form method="POST" action="<?= BASE_URL ?>views/posts/delete_comment.php" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+                    <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                    <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
+                    <button type="submit" class="text-sm text-danger" style="background:none; border:none; cursor:pointer; padding:0; color:var(--danger); font-weight:600;">Delete</button>
+                </form>
                 <?php
     endif; ?>
             </div>
@@ -360,7 +378,7 @@ endif; ?>
             <?php if (isset($replies[$comment['id']])): ?>
             <div class="replies-container mt-2 pl-4" style="border-left: 2px solid var(--border-color);">
                 <?php foreach ($replies[$comment['id']] as $reply): ?>
-                <div class="reply mb-2">
+                <div class="reply mb-2" id="comment-<?= $reply['id'] ?>">
                     <div class="flex items-center mb-1">
                         <a href="<?= BASE_URL?>views/user/profile.php?id=<?= $reply['user_id']?>"
                             style="text-decoration:none; color:inherit; display:flex; align-items:center;">
@@ -405,6 +423,11 @@ endif; ?>
                             onclick="toggleReplyForm(<?= $comment['id']?>, '<?= htmlspecialchars($reply['username'])?>')">Reply</button>
                         <?php if ($reply['user_id'] == $_SESSION['user_id']): ?>
                         <a href="<?= BASE_URL?>views/posts/edit_comment.php?id=<?= $reply['id']?>"                            class="text-xs text-muted">Edit</a>
+                        <form method="POST" action="<?= BASE_URL ?>views/posts/delete_comment.php" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this reply?');">
+                            <input type="hidden" name="comment_id" value="<?= $reply['id'] ?>">
+                            <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
+                            <button type="submit" class="text-xs text-danger" style="background:none; border:none; cursor:pointer; padding:0; color:var(--danger); font-weight:600;">Delete</button>
+                        </form>
                         <?php
             endif; ?>
                     </div>
@@ -440,6 +463,43 @@ endif; ?>
         } else {
             form.style.display = 'none';
         }
+    }
+
+    function filterComments() {
+        const filter = document.getElementById('commentSearchInput').value.toLowerCase();
+        const mainComments = document.querySelectorAll('.comments-list > .comment');
+        
+        mainComments.forEach(mainComment => {
+            const mainAuthorNode = mainComment.querySelector('.flex.items-center strong');
+            const mainAuthor = mainAuthorNode ? mainAuthorNode.innerText.toLowerCase() : '';
+            
+            const mainContentNode = mainComment.querySelector('.comment-content');
+            const mainContent = mainContentNode ? mainContentNode.innerText.toLowerCase() : '';
+            
+            let hasVisibleReply = false;
+            
+            const replies = mainComment.querySelectorAll('.replies-container .reply');
+            replies.forEach(reply => {
+                const replyAuthorNode = reply.querySelector('.flex.items-center strong');
+                const replyAuthor = replyAuthorNode ? replyAuthorNode.innerText.toLowerCase() : '';
+                
+                const replyContentNode = reply.querySelector('.reply-content');
+                const replyContent = replyContentNode ? replyContentNode.innerText.toLowerCase() : '';
+                
+                if (replyAuthor.includes(filter) || replyContent.includes(filter)) {
+                    reply.style.display = '';
+                    hasVisibleReply = true;
+                } else {
+                    reply.style.display = 'none';
+                }
+            });
+            
+            if (mainAuthor.includes(filter) || mainContent.includes(filter) || hasVisibleReply) {
+                mainComment.style.display = '';
+            } else {
+                mainComment.style.display = 'none';
+            }
+        });
     }
 
     function toggleEmojiPicker(inputId) {

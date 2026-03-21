@@ -72,6 +72,11 @@ foreach ($main_comments as $comment): ?>
             onclick="toggleReplyForm(<?= $comment['id']?>, '<?= htmlspecialchars($comment['username'])?>')">Reply</button>
         <?php if ($comment['user_id'] == $_SESSION['user_id']): ?>
         <a href="<?= BASE_URL?>views/posts/edit_comment.php?id=<?= $comment['id']?>" class="text-sm text-muted">Edit</a>
+        <form method="POST" action="<?= BASE_URL ?>views/posts/delete_comment.php" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+            <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+            <input type="hidden" name="post_id" value="<?= $post_id ?>">
+            <button type="submit" class="text-sm text-danger" style="background:none; border:none; cursor:pointer; padding:0; color:var(--danger); font-weight:600;">Delete</button>
+        </form>
         <?php
     endif; ?>
     </div>
@@ -142,6 +147,11 @@ foreach ($main_comments as $comment): ?>
                     onclick="toggleReplyForm(<?= $comment['id']?>, '<?= htmlspecialchars($reply['username'])?>')">Reply</button>
                 <?php if ($reply['user_id'] == $_SESSION['user_id']): ?>
                 <a href="<?= BASE_URL?>views/posts/edit_comment.php?id=<?= $reply['id']?>" class="text-xs text-muted">Edit</a>
+                <form method="POST" action="<?= BASE_URL ?>views/posts/delete_comment.php" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this reply?');">
+                    <input type="hidden" name="comment_id" value="<?= $reply['id'] ?>">
+                    <input type="hidden" name="post_id" value="<?= $post_id ?>">
+                    <button type="submit" class="text-xs text-danger" style="background:none; border:none; cursor:pointer; padding:0; color:var(--danger); font-weight:600;">Delete</button>
+                </form>
                 <?php
             endif; ?>
             </div>

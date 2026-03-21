@@ -254,7 +254,10 @@ class Post
     {
         $ai_percentage = $this->detectAIPercentage($content);
         $stmt = $this->pdo->prepare("INSERT INTO comments (post_id, user_id, content, parent_id, media, ai_percentage) VALUES (?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([$post_id, $user_id, $content, $parent_id, $media, $ai_percentage]);
+        if ($stmt->execute([$post_id, $user_id, $content, $parent_id, $media, $ai_percentage])) {
+            return $this->pdo->lastInsertId();
+        }
+        return false;
     }
 
     public function getComments($post_id)
@@ -301,6 +304,19 @@ class Post
             $stmt = $this->pdo->prepare("UPDATE comments SET content = ?, ai_percentage = ? WHERE id = ?");
             return $stmt->execute([$content, $ai_percentage, $id]);
         }
+    }
+
+    public function deleteComment($id)
+    {
+        $comment = $this->getCommentById($id);
+        if ($comment && $comment['media']) {
+            $mediaPath = __DIR__ . '/../public/images/comment_media/' . $comment['media'];
+            if (file_exists($mediaPath)) {
+                unlink($mediaPath);
+            }
+        }
+        $stmt = $this->pdo->prepare("DELETE FROM comments WHERE id = ?");
+        return $stmt->execute([$id]);
     }
 
     public function delete($id)
