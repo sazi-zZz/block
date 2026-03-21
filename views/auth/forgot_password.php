@@ -1,11 +1,11 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 require_once '../../config/db.php';
 require_once '../../includes/functions.php';
 require_once '../../models/User.php';
 require_once '../../vendor/autoload.php';
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 if (isLoggedIn()) {
     redirect(BASE_URL . 'index.php');
