@@ -108,10 +108,12 @@ endif; ?>
 
             <div
                 style="margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
-                <p class="text-muted" style="font-size: 0.9rem;">
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0.5rem;">
                     Don't have an account?
-                    <a href="<?= BASE_URL?>views/auth/register.php" style="color: var(--white); font-weight: 600; margin-left: 0.25rem;">Create
-                        one →</a>
+                </p>
+                <a href="<?= BASE_URL?>views/auth/register.php" class="btn btn-secondary btn-block" style="padding: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; width: 100%; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); box-sizing: border-box; text-decoration: none;">Create Account</a>
+                <p class="text-muted" style="font-size: 0.85rem; margin-top: 1.25rem;">
+                    If not yet you can download mobile version: <a href="<?= BASE_URL?>download.php" style="color: var(--primary); font-weight: 500;">Download Blocknet APK</a>
                 </p>
             </div>
 
