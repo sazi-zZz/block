@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $block_id = $_POST['block_id'];
     $title = sanitizeInput($_POST['title']);
     $content = sanitizeInput($_POST['content']);
-    $repost_id = $_POST['repost_id'] ?? null;
+    $repost_id = isset($_POST['repost_id']) && $_POST['repost_id'] !== '' ? (int)$_POST['repost_id'] : null;
     $privacy = $_POST['privacy'] ?? 'public';
     $image = uploadMedia($_FILES['image'] ?? null, 'post_images', null, 20);
 
@@ -37,12 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Media size exceeds the limit of 20MB.";
     }
     else {
-        $postModel = new Post($pdo);
-        if ($postModel->create($block_id, $_SESSION['user_id'], $title, $content, $image, $privacy, $repost_id)) {
-            redirect(BASE_URL . 'views/blocks/view.php?id=' . $block_id);
-        }
-        else {
-            $error = "Failed to create post.";
+        try {
+            $postModel = new Post($pdo);
+            if ($postModel->create($block_id, $_SESSION['user_id'], $title, $content, $image, $privacy, $repost_id)) {
+                redirect(BASE_URL . 'views/blocks/view.php?id=' . $block_id);
+            }
+            else {
+                $error = "Failed to create post.";
+            }
+        } catch (PDOException $e) {
+            $error = "Database Error: Cannot complete repost (Constraint or DB error). " . htmlspecialchars($e->getMessage());
+        } catch (Exception $e) {
+            $error = "System Error: " . htmlspecialchars($e->getMessage());
         }
     }
 }
