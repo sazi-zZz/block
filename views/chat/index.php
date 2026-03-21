@@ -11,6 +11,10 @@ $is_global = isset($_GET['global']); // if user explicitly opens Global Chat
 $messageModel = new Message($pdo);
 $recentConversations = $messageModel->getRecentConversations($_SESSION['user_id']);
 
+$unreadStmt = $pdo->prepare("SELECT sender_id, COUNT(*) FROM messages WHERE receiver_id = ? AND is_read = 0 GROUP BY sender_id");
+$unreadStmt->execute([$_SESSION['user_id']]);
+$unreadCounts = $unreadStmt->fetchAll(PDO::FETCH_KEY_PAIR);
+
 $activeChatName = 'Global Chat';
 $isChatActive = $user_id || $is_global; // used to slide to chat window on mobile
 
@@ -119,6 +123,12 @@ include '../layouts/header.php';
                     </div>
                     <div class="chat-list-item-preview">Direct Message</div>
                 </div>
+                <?php $unreadBadgeCount = $unreadCounts[$conv['id']] ?? 0; ?>
+                <?php if ($unreadBadgeCount > 0): ?>
+                    <span class="notif-badge-chat-item" style="background: var(--danger); color: white; border-radius: 12px; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; margin-left: auto;">
+                        <?= $unreadBadgeCount > 99 ? '99+' : $unreadBadgeCount ?>
+                    </span>
+                <?php endif; ?>
             </a>
             <?php
 endforeach; ?>

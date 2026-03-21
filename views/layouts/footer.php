@@ -1,8 +1,8 @@
 </div> <!-- end content-wrapper -->
 </div> <!-- end app-layout -->
 
-<script src="<?= BASE_URL ?>public/js/main.js"></script>
-<script src="<?= BASE_URL ?>public/js/live_sync.js"></script>
+<script src="<?= BASE_URL ?>public/js/main.js?v=<?= time() ?>"></script>
+<script src="<?= BASE_URL ?>public/js/live_sync.js?v=<?= time() ?>"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.js-char-limit').forEach(input => {
