@@ -34,9 +34,8 @@
         <h4 class="mb-2" style="font-size: 1.125rem; font-weight: 700; line-height: 1.3;">
             <?= htmlspecialchars($post['title'])?>
         </h4>
-        <p class="mb-3 text-muted" style="font-size: 0.9375rem; line-height: 1.5;">
-            <?= nl2br(htmlspecialchars(substr($post['content'], 0, 180)))?>
-            <?= strlen($post['content']) > 180 ? '...' : ''?>
+        <p class="mb-3 text-muted" style="font-size: 0.9375rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: pre-wrap;">
+            <?= htmlspecialchars($post['content'])?>
         </p>
 
         <?php if (!empty($post['ai_percentage']) && (int)$post['ai_percentage'] > 0): ?>
@@ -84,9 +83,8 @@ endif; ?>
                 <h5 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">
                     <?= htmlspecialchars($post['repost_title'])?>
                 </h5>
-                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 0;">
-                    <?= nl2br(htmlspecialchars(substr($post['repost_content'], 0, 100)))?>
-                    <?= strlen($post['repost_content']) > 100 ? '...' : ''?>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: pre-wrap;">
+                    <?= htmlspecialchars($post['repost_content'])?>
                 </p>
             </a>
         </div>

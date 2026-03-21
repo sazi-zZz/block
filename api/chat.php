@@ -55,12 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $tmpName = is_array($_FILES['chat_file']['tmp_name']) ? $_FILES['chat_file']['tmp_name'][0] : $_FILES['chat_file']['tmp_name'];
                 $ext = pathinfo($fileName, PATHINFO_EXTENSION);
                 $media = uniqid('file_') . '.' . $ext;
-                move_uploaded_file($tmpName, '../public/files/chat_uploads/' . $media);
+                $targetDir = '../public/files/chat_uploads/';
+                if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
+                move_uploaded_file($tmpName, $targetDir . $media);
             }
             else {
                 // Zip multiple files / folders
                 $media = uniqid('archive_') . '.zip';
-                $zipPath = '../public/files/chat_uploads/' . $media;
+                $targetDir = '../public/files/chat_uploads/';
+                if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
+                $zipPath = $targetDir . $media;
                 $zip = new ZipArchive();
                 if ($zip->open($zipPath, ZipArchive::CREATE) === TRUE) {
                     if ($hasFiles) {

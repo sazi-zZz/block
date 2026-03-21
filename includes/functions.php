@@ -96,7 +96,11 @@ function uploadMedia($fileArray, $targetDir, $default = null, $maxSizeMB = 2)
         if (in_array(strtolower($fileArray['type']), $allowedTypes)) {
             $extension = pathinfo($fileArray['name'], PATHINFO_EXTENSION);
             $fileName = uniqid() . '.' . $extension;
-            $targetFilePath = __DIR__ . '/../public/images/' . $targetDir . '/' . $fileName;
+            $dir = __DIR__ . '/../public/images/' . $targetDir;
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+            $targetFilePath = $dir . '/' . $fileName;
 
             if (move_uploaded_file($fileArray['tmp_name'], $targetFilePath)) {
                 return $fileName;

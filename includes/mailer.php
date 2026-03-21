@@ -22,7 +22,7 @@ function _createMailer()
     $mail->SMTPAuth   = true;
     $mail->Username   = MAIL_FROM;
     $mail->Password   = MAIL_PASS_VAL;
-    $mail->setFrom(MAIL_FROM, 'BLOCKNET Platform');
+    $mail->setFrom(MAIL_FROM, 'BLOCKNET');
     return $mail;
 }
 
@@ -60,7 +60,7 @@ function sendWelcomeEmail($toEmail, $username)
                 <div style='margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 14px; text-align: center; color: rgba(255,255,255,0.5);'>
                     <p>Questions? <a href='mailto:support@blocknet.online' style='color: #ffffff; text-decoration: none; font-weight: 600;'>support@blocknet.online</a></p>
                     <p style='margin-top: 10px;'><a href='{$termsLink}' style='color: rgba(255,255,255,0.7); text-decoration: underline;'>Terms and Conditions</a></p>
-                    <p style='margin-top: 20px;'>&copy; " . date('Y') . " BLOCKNET Platform. All rights reserved.</p>
+                    <p style='margin-top: 20px;'>&copy; " . date('Y') . " BLOCKNET. All rights reserved.</p>
                 </div>
             </div>
         ";

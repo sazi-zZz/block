@@ -71,7 +71,7 @@ foreach ($main_comments as $comment): ?>
         <button class="text-sm text-primary" style="background:none; border:none; cursor:pointer; padding:0;"
             onclick="toggleReplyForm(<?= $comment['id']?>, '<?= htmlspecialchars($comment['username'])?>')">Reply</button>
         <?php if ($comment['user_id'] == $_SESSION['user_id']): ?>
-        <a href="views/posts/edit_comment.php?id=<?= $comment['id']?>" class="text-sm text-muted">Edit</a>
+        <a href="<?= BASE_URL?>views/posts/edit_comment.php?id=<?= $comment['id']?>" class="text-sm text-muted">Edit</a>
         <?php
     endif; ?>
     </div>
@@ -141,7 +141,7 @@ foreach ($main_comments as $comment): ?>
                 <button class="text-xs text-primary" style="background:none; border:none; cursor:pointer; padding:0;"
                     onclick="toggleReplyForm(<?= $comment['id']?>, '<?= htmlspecialchars($reply['username'])?>')">Reply</button>
                 <?php if ($reply['user_id'] == $_SESSION['user_id']): ?>
-                <a href="views/posts/edit_comment.php?id=<?= $reply['id']?>" class="text-xs text-muted">Edit</a>
+                <a href="<?= BASE_URL?>views/posts/edit_comment.php?id=<?= $reply['id']?>" class="text-xs text-muted">Edit</a>
                 <?php
             endif; ?>
             </div>

@@ -70,10 +70,13 @@ include '../layouts/header.php';
         <?= htmlspecialchars($block['name'])?>
     </h1>
 
-    <p class="text-muted mb-4"
-        style="max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; font-size: 1.0625rem;">
-        <?= nl2br(htmlspecialchars($block['description']))?>
-    </p>
+    <div id="block-desc-container" style="max-width: 600px; margin-left: auto; margin-right: auto; margin-bottom: 1.5rem;">
+        <p id="block-desc-text" class="text-muted"
+            style="line-height: 1.6; font-size: 1.0625rem; margin-bottom: 0.25rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap;">
+            <?= htmlspecialchars($block['description'])?>
+        </p>
+        <button id="block-desc-btn" style="background:none; border:none; display:none; color:var(--text-muted); text-decoration:underline; cursor:pointer; font-size:0.85rem; padding:0; margin:0 auto;" onclick="toggleBlockDesc()">See More</button>
+    </div>
 
     <div class="flex flex-wrap justify-center items-center gap-4 mb-2">
         <button type="button" onclick="document.getElementById('membersModal').style.display='flex'"
@@ -272,6 +275,26 @@ endif; ?>
         });
 
         noResults.style.display = (visible === 0 && q.length > 0) ? 'block' : 'none';
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const textEl = document.getElementById("block-desc-text");
+        const btnEl = document.getElementById("block-desc-btn");
+        if (textEl && textEl.scrollHeight > textEl.clientHeight) {
+            btnEl.style.display = "inline-block";
+        }
+    });
+
+    function toggleBlockDesc() {
+        const textEl = document.getElementById("block-desc-text");
+        const btnEl = document.getElementById("block-desc-btn");
+        if (textEl.style.webkitLineClamp === "3") {
+            textEl.style.webkitLineClamp = "unset";
+            btnEl.textContent = "See Less";
+        } else {
+            textEl.style.webkitLineClamp = "3";
+            btnEl.textContent = "See More";
+        }
     }
 </script>
 

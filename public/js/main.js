@@ -139,8 +139,8 @@ function startNotificationPolling() {
                 if (data.max_notif_id) lastNotifId = data.max_notif_id;
                 if (data.max_msg_id) lastMsgId = data.max_msg_id;
 
-                const notifLinks = document.querySelectorAll('a[href*="views/notifications/index.php"]');
-                const chatLinks = document.querySelectorAll('a[href*="views/chat/index.php"]');
+                const notifLinks = document.querySelectorAll('a.nav-link[href*="views/notifications/index.php"]');
+                const chatLinks = document.querySelectorAll('a.nav-link[href*="views/chat/index.php"]');
 
                 // If currently on notifications page, force remove badge visually without waiting for server response
                 if (window.location.href.includes('views/notifications/')) {

@@ -249,22 +249,27 @@ endif; ?>
 
     <form method="POST" class="mb-3" enctype="multipart/form-data">
         <input type="hidden" name="action" value="comment">
-        <div class="flex gap-2">
-            <input type="text" id="comment-input" name="content" class="js-char-limit" data-limit="1000"
-                placeholder="Add a comment..." style="flex: 1;">
-            <button type="button" class="btn btn-secondary" onclick="document.getElementById('comment-image').click()"
-                style="padding: 0.5rem;"><i class="fa-regular fa-image"></i></button>
-            <button type="submit" class="btn btn-primary">Post</button>
+        
+        <div style="margin-bottom: 0.75rem;">
+            <textarea id="comment-input" name="content" class="js-char-limit" data-limit="1000"
+                placeholder="Add a comment..." style="width: 100%; min-height: 80px; resize: vertical; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem;"></textarea>
         </div>
+
+        <div class="flex items-center justify-between mt-2">
+            <div class="flex items-center gap-3">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('comment-image').click()"
+                    style="padding: 0.4rem 0.6rem; font-size: 1.1rem;" title="Attach Image"><i class="fa-regular fa-image"></i></button>
+                <div class="emoji-picker" style="cursor: pointer; font-size: 1.3rem;"
+                    onclick="toggleEmojiPicker('comment-input')" title="Emoji">😀</div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.4rem 1.25rem;">Post</button>
+        </div>
+
         <input type="file" id="comment-image" name="image" accept="image/png, image/jpeg, image/gif, image/webp"
             style="display:none;" onchange="previewCommentImage(this, 'comment-image-preview')">
-        <small class="text-muted" style="display: block; margin-top: 0.25rem; font-size: 0.75rem;">Maximum file size:
+        <small class="text-muted" style="display: block; margin-top: 0.5rem; font-size: 0.75rem;">Maximum file size:
             2MB. Supported formats: JPEG, PNG, GIF, WebP.</small>
         <div id="comment-image-preview" class="mt-2 text-sm text-primary" style="display:none;"></div>
-        <div class="mt-2">
-            <div class="emoji-picker" style="cursor: pointer; font-size: 1.2rem;"
-                onclick="toggleEmojiPicker('comment-input')">😀</div>
-        </div>
     </form>
 
     <div class="comments-list">
@@ -325,26 +330,30 @@ endif; ?>
                 <form method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="comment">
                     <input type="hidden" name="parent_id" value="<?= $comment['id']?>">
-                    <div class="flex gap-2">
-                        <input type="text" id="reply-input-<?= $comment['id']?>" name="content"
+                    
+                    <div style="margin-bottom: 0.5rem;">
+                        <textarea id="reply-input-<?= $comment['id']?>" name="content"
                             class="text-sm js-char-limit" data-limit="1000" placeholder="Write a reply..."
-                            style="flex:1; padding: 0.5rem;">
-                        <button type="button" class="btn btn-secondary btn-sm"
-                            onclick="document.getElementById('reply-image-<?= $comment['id']?>').click()"><i
-                                class="fa-regular fa-image"></i></button>
-                        <button type="submit" class="btn btn-primary btn-sm">Reply</button>
+                            style="width: 100%; border-radius: var(--radius-sm); padding: 0.5rem; min-height: 50px; resize: vertical; border: 1px solid var(--border-color);"></textarea>
                     </div>
+                    
+                    <div class="flex items-center justify-between mt-2">
+                        <div class="flex items-center gap-2">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                onclick="document.getElementById('reply-image-<?= $comment['id']?>').click()" style="padding: 0.3rem 0.5rem; font-size: 1rem;"><i
+                                    class="fa-regular fa-image"></i></button>
+                            <div class="emoji-picker" style="cursor: pointer; font-size: 1.2rem;"
+                                onclick="toggleEmojiPicker('reply-input-<?= $comment['id']?>')">😀</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.3rem 1rem;">Reply</button>
+                    </div>
+
                     <input type="file" id="reply-image-<?= $comment['id']?>" name="image"
                         accept="image/png, image/jpeg, image/gif, image/webp" style="display:none;"
                         onchange="previewCommentImage(this, 'reply-image-preview-<?= $comment['id']?>')">
-                    <small class="text-muted" style="display: block; margin-top: 0.25rem; font-size: 0.75rem;">Maximum
-                        file size: 2MB. Supported formats: JPEG, PNG, GIF, WebP.</small>
+                    <small class="text-muted" style="display: block; margin-top: 0.25rem; font-size: 0.75rem;">Max 2MB. Supported: JPEG, PNG, GIF, WebP.</small>
                     <div id="reply-image-preview-<?= $comment['id']?>" class="mt-1 text-xs text-primary"
                         style="display:none;"></div>
-                    <div class="mt-1">
-                        <div class="emoji-picker" style="cursor: pointer; font-size: 1rem;"
-                            onclick="toggleEmojiPicker('reply-input-<?= $comment['id']?>')">😀</div>
-                    </div>
                 </form>
             </div>
 

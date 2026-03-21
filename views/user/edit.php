@@ -46,9 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$error) {
         if ($userModel->updateProfile($_SESSION['user_id'], $bio, $avatarName, $coverName)) {
-            $success = 'Profile updated successfully!';
-            // Reload user data
-            $profileUser = $userModel->getUserById($_SESSION['user_id']);
+            $_SESSION['success_msg'] = 'Profile updated successfully!';
+            redirect(BASE_URL . 'views/user/profile.php');
         }
         else {
             $error = 'Failed to update profile.';
@@ -115,7 +114,7 @@ endif; ?>
         </div>
 
         <button type="submit" id="update-btn" class="btn btn-primary btn-block mt-2">Update Profile</button>
-        <a href="views/user/profile.php" class="btn btn-secondary btn-block mt-2"
+        <a href="<?= BASE_URL ?>views/user/profile.php" class="btn btn-secondary btn-block mt-2"
             style="text-align:center;">Cancel</a>
     </form>
 </div>
