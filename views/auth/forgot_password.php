@@ -1,11 +1,8 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
 require_once '../../config/db.php';
 require_once '../../includes/functions.php';
 require_once '../../models/User.php';
-require_once '../../vendor/autoload.php';
+require_once '../../includes/mailer.php';
 
 if (isLoggedIn()) {
     redirect(BASE_URL . 'index.php');
@@ -35,38 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $protocol  = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
                 $resetLink = $protocol . '://' . $_SERVER['HTTP_HOST'] . BASE_URL . 'views/auth/reset_password.php?token=' . $token;
 
-                $mail = new PHPMailer(true);
-                try {
-                    // Use PHP's native mail() — works on all shared hosting
-                    // (avoids SMTP port 587/465 blocks)
-                    $mail->isMail();
-
-                    // Recipients
-                    $mail->setFrom('no-reply@blocknet.online', 'BLOCKNET Platform');
-                    $mail->addAddress($email, $user['username']);
-
-                    // Content
-                    $mail->isHTML(true);
-                    $mail->Subject = 'Password Reset Request - BLOCKNET';
-                    $mail->Body = "
-                        <div style='background-color:#080808;color:#ffffff;padding:40px;font-family:sans-serif;max-width:600px;margin:0 auto;border-radius:12px;'>
-                            <h1 style='color:#ffffff;letter-spacing:2px;'>BLOCKNET</h1>
-                            <h2 style='color:#ffffff;'>Password Reset Request</h2>
-                            <p style='color:rgba(255,255,255,0.7);'>Hello {$user['username']},</p>
-                            <p style='color:rgba(255,255,255,0.7);'>You recently requested to reset your password. Click the button below to reset it. This link is valid for <strong>60 minutes</strong>.</p>
-                            <a href='{$resetLink}' style='display:inline-block;background:#ffffff;color:#080808;padding:12px 28px;border-radius:6px;font-weight:700;text-decoration:none;margin:20px 0;'>Reset My Password</a>
-                            <p style='color:rgba(255,255,255,0.5);font-size:13px;'>Or copy this link: {$resetLink}</p>
-                            <p style='color:rgba(255,255,255,0.5);font-size:13px;'>If you did not request a password reset, you can safely ignore this email.</p>
-                            <p style='color:rgba(255,255,255,0.5);font-size:13px;'>Thanks,<br>The BLOCKNET Team</p>
-                        </div>
-                    ";
-                    $mail->AltBody = "Hello {$user['username']},\n\nReset your password using this link (valid 60 minutes):\n{$resetLink}\n\nIf you didn't request this, ignore this email.\n\nThanks,\nThe BLOCKNET Team";
-
-                    $mail->send();
+                $sent = sendPasswordResetEmail($email, $user['username'], $resetLink);
+                if ($sent) {
                     $success = 'If an account with that email exists, we have sent a password reset link.';
-                }
-                catch (Exception $e) {
-                    error_log('BLOCKNET reset email error: ' . $mail->ErrorInfo);
+                } else {
                     $error = 'Failed to send reset email. Please try again later.';
                 }
             }
