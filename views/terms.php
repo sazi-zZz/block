@@ -12,8 +12,8 @@ require_once '../includes/functions.php';
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/style.css">
-    <link rel="icon" type="image/png" href="<?= BASE_URL ?>public/Block.png">
+    <link rel="stylesheet" href="<?= BASE_URL?>public/css/style.css">
+    <link rel="icon" type="image/png" href="<?= BASE_URL?>public/Block.png">
     <style>
         body {
             background: #080808;
@@ -75,14 +75,21 @@ require_once '../includes/functions.php';
 
 <body>
     <div class="terms-container">
-        <a href="<?= BASE_URL ?>index.php" class="back-link">
+        <a href="<?= BASE_URL?>index.php" class="back-link">
             <i class="fa-solid fa-arrow-left"></i>
             Go Back
         </a>
         <h1>Terms and Conditions</h1>
 
-        <p>Welcome to BLOCKNET. By accessing or using our platform, you agree to comply with and be bound by the following
+        <p>Welcome to BLOCKNET. By accessing or using our platform, you agree to comply with and be bound by the
+            following
             terms and conditions.</p>
+
+        <p>
+            <b>Support & Contact:</b> support@blocknet.online & admin@blocknet.online
+            <br>
+            <b>Discord:</b> https://discord.gg/XCnNb9wSnR
+        </p>
 
         <h2>1. Acceptance of Terms</h2>
         <p>By creating an account on BLOCKNET, you agree to these Terms and Conditions and our Privacy Policy. If you do
@@ -93,7 +100,8 @@ require_once '../includes/functions.php';
             are strictly prohibited. We reserve the right to terminate accounts that violate these rules.</p>
 
         <h2>3. Account Security</h2>
-        <p>You are responsible for maintaining the confidentiality of your account credentials. BLOCKNET is not liable for
+        <p>You are responsible for maintaining the confidentiality of your account credentials. BLOCKNET is not liable
+            for
             any loss resulting from unauthorized access to your account.</p>
 
         <h2>4. Community Standards</h2>
@@ -101,7 +109,8 @@ require_once '../includes/functions.php';
             that is deemed inappropriate may be removed without notice.</p>
 
         <h2>5. Limitation of Liability</h2>
-        <p>BLOCKNET provides the service "as is" without any warranties. We are not responsible for any damages resulting
+        <p>BLOCKNET provides the service "as is" without any warranties. We are not responsible for any damages
+            resulting
             from the use or inability to use the platform.</p>
 
         <h2>6. Changes to Terms</h2>
