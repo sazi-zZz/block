@@ -117,6 +117,10 @@ require_once '../includes/functions.php';
         <p>We may update these terms from time to time. Continued use of the platform after changes constitutes
             acceptance of the new terms.</p>
 
+        <h2>7. AI Content Detection</h2>
+        <p>BLOCKNET uses AI-powered tools to detect potentially AI-generated content. Users are responsible for the
+            authenticity of their posts. AI-generated content may be flagged or removed at our discretion.</p>
+
         <div
             style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
             <p style="font-size: 0.9rem;">Last Updated:
